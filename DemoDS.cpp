@@ -76,12 +76,14 @@ class DataBase
 {
     private:
     Year *year;
+    int yr1;
 
     public:
     DataBase(){}
     DataBase(int y)
     {
         year = new Year[y];
+        yr1 = y;
     }
     void allocateYearMemory(int y)
     {
@@ -89,7 +91,7 @@ class DataBase
     }
 
     void setData(int y, int c, int r, int i, string n){
-        year[y].setYear(c,r,i,n);
+        year[y%yr1].setYear(c,r,i,n);
     }
 };
 
