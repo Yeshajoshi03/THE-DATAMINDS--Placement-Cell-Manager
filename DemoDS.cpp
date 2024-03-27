@@ -134,9 +134,9 @@ void set_data(){
         getline(my_yr_file, yearF, '\n');
 
         int int_year=0;//string year to int year
-        while(yearF[i]<4){
+        for(int j=0; j<4; j++){
             int temp;
-            temp=yearF[i]* pow(10,3-i);
+            temp=(yearF[j]-'0')* pow(10,3-j);
             int_year= int_year+temp;
         }
 
