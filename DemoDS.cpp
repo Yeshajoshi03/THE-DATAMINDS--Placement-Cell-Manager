@@ -97,7 +97,7 @@ class DataBase
     }
 
     void setData(int y, int c, int r, int i, string n){
-        year[y].setYear(c,r,i,n);
+        year[y%yr1].setYear(c,r,i,n);
     }
 
     Year * hashRtYear(int y)
