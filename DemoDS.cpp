@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+class DataBase;
 class Student
 {
     private:
@@ -98,7 +98,7 @@ class Company
         cName=s;
     }
     friend class Year;
-    friend void set_data(string year_file);
+    friend void set_data(string year_file, DataBase*);
 };
 
 class Year
@@ -165,6 +165,13 @@ class DataBase
         No_yr = y;
     }
 
+    void allocateYearMemory(int y)
+    {
+        year = new Year[y];
+        No_yr = y;
+    }
+    
+
     void setData(int y, int c, int r, int i, string n){
         year[y%No_yr].setYear(c,r,i,n);
     }
@@ -197,13 +204,14 @@ int count(ifstream *f){//pass by refernce
     return c;
 }
 
-void set_data(string year_file){
+void set_data(string year_file, DataBase* All_std_data){
     
     ifstream my_yr_file;
     my_yr_file.open(year_file);
     int No_yr;
     No_yr = count(&my_yr_file);//gets the number of year
-    DataBase All_std_data(No_yr); 
+
+    All_std_data->allocateYearMemory(No_yr);
 
     my_yr_file.seekg(0 , my_yr_file.beg);
     
@@ -221,7 +229,7 @@ void set_data(string year_file){
             int_year= int_year+temp;
         }
 
-        Year *yptr = All_std_data.hashRtYear(int_year);
+        Year *yptr = All_std_data->hashRtYear(int_year);
 
         yptr->set_yr(int_year);
 
@@ -333,6 +341,11 @@ void set_data(string year_file){
 }
 
 int main()
-{
+{   
+    DataBase database;
+    
+    set_data("Year.txt", &database);
+
+
     
 }
