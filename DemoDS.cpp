@@ -70,6 +70,7 @@ class Round
                 
         }
     }
+    friend int students_in_company(DataBase d,string company_name);
 };
 
 class Company
@@ -99,6 +100,7 @@ class Company
     }
     friend class Year;
     friend void set_data(string year_file, DataBase*);
+    friend int students_in_company(DataBase d,string company_name);
 };
 
 class Year
@@ -135,7 +137,7 @@ class Year
             h = (comp_code%97 + (i * comp_code%23))% No_of_Comp;//double hashing
             if(company[h].cName.empty())
             {
-                company[h].cName == comp_name;
+                company[h].cName = comp_name;
                 return &company[h];
                 break;
             }
@@ -170,8 +172,10 @@ class DataBase
         year = new Year[y];
         No_yr = y;
     }
-    
 
+    int no_of_years(){
+        return No_yr;
+    }
     void setData(int y, int c, int r, int i, string n){
         year[y%No_yr].setYear(c,r,i,n);
     }
@@ -180,6 +184,7 @@ class DataBase
     {
         return &year[y%No_yr];
     }
+    friend int students_in_company(DataBase d,string company_name);
 };
 
 void startdata(ifstream *f)
@@ -340,12 +345,20 @@ void set_data(string year_file, DataBase* All_std_data){
     }
 }
 
+
 int main()
 {   
     DataBase database;
     
     set_data("Year.txt", &database);
-
+    int x;
+    x=students_in_company(database,"Google");
 
     
+}
+int students_in_company(DataBase d,string company_name){//total number of students in a company till last year
+    int num=0;
+    for(int i=0; i<d.no_of_years() ; i++){
+        num=num+ d.year[i].hashCompName(company_name)->Final.numS;
+    }
 }
