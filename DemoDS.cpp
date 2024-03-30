@@ -17,7 +17,7 @@ class Student
     string skypeID;
 
         
-    public:
+    public: 
     void setStudent(string n, string date, string st, string et, int i, string mail, string prog, string cont ,string whats, string altNo, string skypeid ){
         id=i;
         sName=n;
@@ -76,7 +76,7 @@ class Company
 {
     private:
     string cName;
-    int salery;
+    // int salery;
 
     Round R1;
     Round R2;
@@ -94,12 +94,11 @@ class Company
         rptr[3] = &HR;
         rptr[4] = &Final;
     }
-    void setComp(int r, int i, string n);
     void set_comp_name(string s){
         cName=s;
     }
     friend class Year;
-    friend void set_data();
+    friend void set_data(string year_file);
 };
 
 class Year
@@ -154,7 +153,7 @@ class DataBase
 {
     private:
     Year *year;
-    int yr1;
+    int No_yr;
 
     public:
     DataBase(){
@@ -163,21 +162,16 @@ class DataBase
     DataBase(int y)
     {
         year = new Year[y];
-        yr1 = y;
-    }
-    void allocateYearMemory(int y)
-    {
-        year = new Year[y];
-        yr1 = y;
+        No_yr = y;
     }
 
     void setData(int y, int c, int r, int i, string n){
-        year[y%yr1].setYear(c,r,i,n);
+        year[y%No_yr].setYear(c,r,i,n);
     }
 
-    Year * hashRtYear(int y)
+    Year * hashRtYear(int y)//ASSUMPTION: Continuous year data
     {
-        return &year[y%yr1];
+        return &year[y%No_yr];
     }
 };
 
@@ -195,7 +189,7 @@ void startdata(ifstream *f)
 int count(ifstream *f){//pass by refernce
     int c=0;
     while(f->peek() != EOF)
-    {   
+    {     
         string str;
         getline(*f, str, '\n');
         c++;
@@ -203,10 +197,10 @@ int count(ifstream *f){//pass by refernce
     return c;
 }
 
-void set_data(){
-
+void set_data(string year_file){
+    
     ifstream my_yr_file;
-    my_yr_file.open("yearFile.txt");
+    my_yr_file.open(year_file);
     int No_yr;
     No_yr = count(&my_yr_file);//gets the number of year
     DataBase All_std_data(No_yr); 
@@ -214,14 +208,14 @@ void set_data(){
     my_yr_file.seekg(0 , my_yr_file.beg);
     
     for(int i=0 ; i<No_yr ; i++)
-    {
+    { 
         ifstream my_comp_file;
 
         string yearF;
         getline(my_yr_file, yearF, '\n');
 
         int int_year=0;//string year to int year
-        for(int j=0; j<4; j++){
+        for(int j=0; j<4; j++){//first 4 chars from filename
             int temp;
             temp=(yearF[j]-'0')* pow(10,3-j);
             int_year= int_year+temp;
@@ -293,7 +287,6 @@ void set_data(){
 
                 getline(my_comp_file, comp_name, '\n'); 
 
-                ifstream comp_round_file;
                 comp_round_file.open(comp_name);//points to round i+1 file of a company
 
                 startdata(&comp_round_file);//function to set pointer to start of data
@@ -337,4 +330,9 @@ void set_data(){
             }     
         }
     }
+}
+
+int main()
+{
+    
 }
