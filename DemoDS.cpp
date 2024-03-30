@@ -122,9 +122,9 @@ class Year
     }
     Company* hashCompName(string comp_name){
         int comp_code=0;//company name to company code for hashing
-        for(int j=0; j<4; j++){
+        for(int j=0; j<3; j++){
             int temp;
-            temp=comp_name[j]* pow(10,6-(2*j));
+            temp=comp_name[j]* pow(10,4-(2*j));
             comp_code= comp_code+temp;
         }
         int i=0;
