@@ -30,6 +30,7 @@ class Student
         Whatsapp_no=whats;
         alt_no=altNo; 
         skypeID=skypeid;
+        
     }
     friend class Round; 
 };
@@ -70,8 +71,28 @@ class Round
                 
         }
     }
+    Student* accesshashStdId(int id){
+        int i=0;
+        for(i=0; i<numS ; i++){
+            int h;
+            h = (id%23 + (i * id%11))% numS;//double hashing
+            if(student[h].id == id)
+            {
+                return &student[h];
+                break;
+            }
+            else
+            {
+                i++;
+            }
+        }         
+        }
+    
+    
     friend int students_in_company(DataBase d,string company_name);
     friend int students_in_comp_year(DataBase d, int y, string company_name);
+    friend int students_in_comp_branch_yearly(DataBase d, int y,string company_name, string branch);
+
 };
 
 class Company
@@ -103,6 +124,7 @@ class Company
     friend void set_data(string year_file, DataBase*);
     friend int students_in_company(DataBase d,string company_name);
     friend int students_in_comp_year(DataBase d, int y, string company_name);
+    friend int students_in_comp_branch_yearly(DataBase d, int y,string company_name, string branch);
 };
 
 class Year
@@ -245,7 +267,21 @@ int count(ifstream *f){//pass by refernce
     }
     return c;
 }
+int MDes=0,MIct=0,MScIt=0, MScDS=0,BIct=0, BIctCs=0, BMnc=0, BEvd=0;//globally declared
+void separate_branchwise(string str){
+    if(str[5]=='0'){//Bachelors
+        if(str[6]=='1' && str[7]!='4')
+            BIct++;
+        else if(str[6]=='1' && str[7]=='4')
+            BIctCs++;
+        else if(str[6]=='3')
+            BMnc++;
+        else if(str[6]=='4')
+            BEvd++;
+    }else{//Masters
 
+    }
+}
 void set_data(string year_file, DataBase* All_std_data){
     
     ifstream my_yr_file;
@@ -322,6 +358,8 @@ void set_data(string year_file, DataBase* All_std_data){
                 getline(comp_round_file, tempalt, ',');
                 getline(comp_round_file, tempskype, '\n');
 
+                separate_branchwise(tempid);
+                
                 for(int j=0; j<9; j++)//string std_id to int std_id
                 {
                     int temp;
@@ -412,4 +450,7 @@ int students_in_comp_year(DataBase d, int y, string company_name){//Number of st
         return 0;
     }
     
+}
+int students_in_comp_branch_yearly(DataBase d, int y,string company_name, string branch){
+    d.hashRtYear(y)->accessHashCompName(company_name)->Final;
 }
