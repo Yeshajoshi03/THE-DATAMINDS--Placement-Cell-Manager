@@ -71,6 +71,7 @@ class Round
         }
     }
     friend int students_in_company(DataBase d,string company_name);
+    friend int students_in_comp_year(DataBase d, int y, string company_name);
 };
 
 class Company
@@ -101,6 +102,7 @@ class Company
     friend class Year;
     friend void set_data(string year_file, DataBase*);
     friend int students_in_company(DataBase d,string company_name);
+    friend int students_in_comp_year(DataBase d, int y, string company_name);
 };
 
 class Year
@@ -146,6 +148,41 @@ class Year
                 i++;
             }
                 
+        }
+    }
+    Company* accessHashCompName(string company_name){
+        int comp_code=0;//company name to company code given by user
+        for(int j=0; j<3; j++){
+            int temp;
+            temp=company_name[j]* pow(10,4-(2*j));
+            comp_code= comp_code+temp;
+        }
+        int i=0;
+        for(i=0; i<No_of_Comp; i++){
+
+            int h;
+            h = (comp_code%97 + (i * comp_code%23))% No_of_Comp;//double hashing
+
+
+            int comp_code1=0;//company name to company code given by user
+            for(int j=0; j<3; j++){
+                int temp;
+                temp=company[h].cName[j]* pow(10,4-(2*j));
+                comp_code1= comp_code1+temp;
+            }
+            if(comp_code== comp_code1)
+            {
+                return &company[h];
+                break;
+            }
+            else
+            {
+                i++;
+            }
+                
+        }
+        if(i==No_of_Comp){
+            return NULL;
         }
     }
     
@@ -359,6 +396,20 @@ int main()
 int students_in_company(DataBase d,string company_name){//total number of students in a company till last year
     int num=0;
     for(int i=0; i<d.no_of_years() ; i++){
-        num=num+ d.year[i].hashCompName(company_name)->Final.numS;
+        if(d.year[i].accessHashCompName(company_name) == NULL){
+            continue;
+        }else{
+            num=num+ d.year[i].accessHashCompName(company_name)->Final.numS;
+        } 
     }
+    return num;
+}
+
+int students_in_comp_year(DataBase d, int y, string company_name){//Number of students placed in a particular company in a given year
+    if(d.hashRtYear(y)->accessHashCompName(company_name) != NULL){
+        return d.hashRtYear(y)->accessHashCompName(company_name)->Final.numS;
+    }else{
+        return 0;
+    }
+    
 }
