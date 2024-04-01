@@ -369,7 +369,7 @@ void set_data(string year_file, DataBase* All_std_data){
                 Student *sptr = cptr->rptr[0]->hashStudentId(tempID);
                 sptr->setStudent(tempname, tempdate, tempstr, tempend, tempID, tempmail, tempPro, tempcont, tempwhats, tempalt, tempskype);
                 
-            }                
+            }
             
             for(int i=1; i<5 ; i++){
 
