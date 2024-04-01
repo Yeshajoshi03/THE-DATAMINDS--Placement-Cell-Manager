@@ -203,9 +203,7 @@ class Year
             }
                 
         }
-        if(i==No_of_Comp){
-            return NULL;
-        }
+        return NULL;
     }
     
 };
@@ -426,9 +424,10 @@ int main()
     DataBase database;
     
     set_data("Year.txt", &database);
-    int x;
-    x=students_in_company(database,"Google");
+    // int x;
+    // x=students_in_company(database,"Google");
 
+    cout << database.no_of_years();
     
 }
 int students_in_company(DataBase d,string company_name){//total number of students in a company till last year
