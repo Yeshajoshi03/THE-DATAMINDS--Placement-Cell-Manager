@@ -287,15 +287,15 @@ void set_data(string year_file, DataBase* All_std_data){
     my_yr_file.open(year_file);
     int No_yr;
     No_yr = count(&my_yr_file);//gets the number of year
-    cout<<No_yr<<endl;
+    //cout<<No_yr<<endl;
     All_std_data->allocateYearMemory(No_yr);
-     my_yr_file.close();
-     my_yr_file.open(year_file);
+    my_yr_file.close();
+    my_yr_file.open(year_file);
 
     // my_yr_file.seekg(0 , ios::beg);
-    std::streampos start_position = my_yr_file.tellg();
+    //std::streampos start_position = my_yr_file.tellg();
         
-    std::cout << "Pointer position at the beginning of the fileyr: " << start_position << std::endl;
+    //std::cout << "Pointer position at the beginning of the fileyr: " << start_position << std::endl;
 
     // string s;
     // getline(my_yr_file, s, '\n');
@@ -307,7 +307,7 @@ void set_data(string year_file, DataBase* All_std_data){
 
         string yearF;
         getline(my_yr_file, yearF, '\n');
-        cout<<yearF;
+        //cout<<yearF;
         int int_year=0;//string year to int year
         for(int j=0; j<4; j++){//first 4 chars from filename
             int temp;
@@ -315,20 +315,20 @@ void set_data(string year_file, DataBase* All_std_data){
             int_year= int_year+temp;
         }
 
-        cout << int_year<< endl;
+        // cout << int_year<< endl;
 
         Year *yptr = All_std_data->hashRtYear(int_year);
 
         yptr->set_yr(int_year);
 
         
-        cout << yptr->yr<<endl<<endl;
+        // cout << yptr->yr<<endl<<endl;
 
         my_comp_file.open(yearF);
 
         int No_c= count(&my_comp_file);
         No_c = No_c/5;//Gets the number of company
-        cout<<No_c<<endl;
+        // cout<<No_c<<endl;
         yptr->allocateCompMemory(No_c);
 
         my_comp_file.close();
@@ -348,11 +348,11 @@ void set_data(string year_file, DataBase* All_std_data){
         // int xy;
         // xy=count(&my_comp_file);
         // cout<<xy/5<<endl;
-        std::streampos start_position = my_comp_file.tellg();
+        // std::streampos start_position = my_comp_file.tellg();
         
-        std::cout << "Pointer position at the beginning of the file: " << start_position << std::endl;
+        // std::cout << "Pointer position at the beginning of the file: " << start_position << std::endl;
         //my_comp_file.seekg(0, my_comp_file.beg);
-//ROUND
+     //ROUND
 
         for(int j=0 ; j<No_c ; j++){
             string comp_name;
@@ -377,15 +377,19 @@ void set_data(string year_file, DataBase* All_std_data){
             cptr->rptr[0]->allocateStuMemory(No_std);//allocated student memory
             // comp_round_file.close();
             // comp_round_file.open(comp_name);
-             comp_round_file.seekg(0,comp_round_file.beg);
-             std::streampos start_position = comp_round_file.tellg();
-        
-             std::cout << "Pointer position at the beginning of the file: " << start_position << std::endl;
+            comp_round_file.seekg(0,comp_round_file.beg);
+            //std::streampos start_position = comp_round_file.tellg();
+         //      
+            // std::cout << "Pointer position at the beginning of the file: " << start_position << std::endl;
             startdata(&comp_round_file);
-            comp_round_file.seekg(-5,comp_round_file.cur);//pointing to 1
-            // string s;
-            // getline(comp_round_file, s, '\n');
-            // cout<<s<<endl;
+
+            
+            comp_round_file.seekg(comp_round_file.tellg()- streampos(10) );//pointing to 1
+            //comp_round_file.seekg(-2, std::ios_base::cur);
+            // comp_round_file.seekg(-2,comp_round_file.cur);//pointing to 1
+             string s;
+             getline(comp_round_file, s, '\n');
+             cout<<s<<endl;
             
             while(comp_round_file.peek() != EOF){
                 int tempID=0;
@@ -417,16 +421,19 @@ void set_data(string year_file, DataBase* All_std_data){
 
                 
             }
-            cout<< All_std_data->hashRtYear(int_year)->accessHashCompName(comp_name)->R1.student[1].sName;
+            //cout<< All_std_data->hashRtYear(int_year)->accessHashCompName(comp_name)->R1.student[1].sName;
             comp_round_file.close();
+
             for(int i=1; i<5 ; i++){
 
                 getline(my_comp_file, comp_name, '\n'); 
+
                 cout<<comp_name<<endl;
+
                 comp_round_file.open(comp_name);//points to round i+1 file of a company
-                std::streampos start_position4 = comp_round_file.tellg();
+                // std::streampos start_position4 = comp_round_file.tellg();
         
-                std::cout << "Pointer position at the beginning of the file: " << start_position4<< std::endl;
+                // std::cout << "Pointer position at the beginning of the file: " << start_position4<< std::endl;
 
                 // string s;
                 // getline(comp_round_file,s,'\n');
@@ -437,22 +444,25 @@ void set_data(string year_file, DataBase* All_std_data){
                 // cout<<s<<endl;
                 int No_std;//number of student in first round of a company
                 No_std=count(&comp_round_file);
-                cout << No_std<<endl;
+                // cout << No_std<<endl;
+
                 cptr->rptr[i]->allocateStuMemory(No_std);//allocated student memory
                 comp_round_file.close();
                 comp_round_file.open(comp_name);
                 //comp_round_file.seekg(0,comp_round_file.beg);
-                std::streampos start_position = comp_round_file.tellg();
+                // std::streampos start_position = comp_round_file.tellg();
         
-                std::cout << "Pointer position at the beginning of the file: " << start_position << std::endl;
+                // std::cout << "Pointer position at the beginning of the file: " << start_position << std::endl;
 
                 startdata(&comp_round_file);
                 
-                comp_round_file.seekg(comp_round_file.tellg()-  streampos(5));//pointing to 1
-                string s;
-                getline(comp_round_file,s,'\n');
-                cout<<s<<endl;
-                cout<<"Hi"<<endl;
+                //comp_round_file.seekg(-8,comp_round_file.cur);//pointing to 1
+
+                comp_round_file.seekg(comp_round_file.tellg()-  streampos(8));//pointing to 1
+                // string s;
+                // getline(comp_round_file,s,'\n');
+                // cout<<s<<endl;
+                //cout<<"Hi"<<endl;
                 while(comp_round_file.peek() != EOF){
                     int tempID=0;
                     string tempsr, tempname, tempdate, tempstatus, tempstr, tempend, tempid, tempmail, tempPro, tempcont, tempwhats, tempalt, tempskype;
@@ -480,12 +490,14 @@ void set_data(string year_file, DataBase* All_std_data){
                     sptr->setStudent(tempname, tempdate, tempstr, tempend, tempID, tempmail, tempPro, tempcont, tempwhats, tempalt, tempskype);
                     
                 }          
-                cout << "hello"<<endl;
+                cout<< All_std_data->hashRtYear(int_year)->accessHashCompName(comp_name)->rptr[i]->student[1].sName;
+                // cout << "hello"<<endl;
                 comp_round_file.close();
-            } 
-            cout<< All_std_data->hashRtYear(int_year)->accessHashCompName(comp_name)->R1.student[0].sName;    
+            }     
         }
+        my_comp_file.close();
     }
+    my_yr_file.close();
 }
 
 int students_in_comp_year(DataBase d, int y, string company_name);
