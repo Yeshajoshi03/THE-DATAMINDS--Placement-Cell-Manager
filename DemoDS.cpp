@@ -490,7 +490,7 @@ void set_data(string year_file, DataBase* All_std_data){
                     sptr->setStudent(tempname, tempdate, tempstr, tempend, tempID, tempmail, tempPro, tempcont, tempwhats, tempalt, tempskype);
                     
                 }          
-                cout<< All_std_data->hashRtYear(int_year)->accessHashCompName(comp_name)->rptr[i]->student[1].sName;
+                //cout<< All_std_data->hashRtYear(int_year)->accessHashCompName(comp_name)->rptr[i]->student[1].sName;
                 // cout << "hello"<<endl;
                 comp_round_file.close();
             }     
