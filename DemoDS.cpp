@@ -384,13 +384,40 @@ void set_data(string year_file, DataBase* All_std_data){
             startdata(&comp_round_file);
 
             
-            comp_round_file.seekg(comp_round_file.tellg()- streampos(10) );//pointing to 1
+            // comp_round_file.seekg(comp_round_file.tellg()- streampos(10) );//pointing to 1
             //comp_round_file.seekg(-2, std::ios_base::cur);
             // comp_round_file.seekg(-2,comp_round_file.cur);//pointing to 1
-             string s;
-             getline(comp_round_file, s, '\n');
-             cout<<s<<endl;
-            
+            //  string s;
+            //  getline(comp_round_file, s, '\n');
+            //  cout<<s<<endl;
+
+            int tempID1=0;
+                string tempname1, tempdate1, tempstatus1, tempstr1, tempend1, tempid1, tempmail1, tempPro1, tempcont1, tempwhats1, tempalt1, tempskype1;
+                //getline(comp_round_file, tempsr, ',');
+                getline(comp_round_file, tempname1, ',');
+                getline(comp_round_file, tempdate1, ',');
+                getline(comp_round_file, tempstatus1, ',');
+                getline(comp_round_file, tempstr1, ',');
+                getline(comp_round_file, tempend1, ',');
+                getline(comp_round_file, tempid1, ',');
+                getline(comp_round_file, tempmail1, ',');
+                getline(comp_round_file, tempPro1, ',');
+                getline(comp_round_file, tempcont1, ',');
+                getline(comp_round_file, tempwhats1, ',');
+                getline(comp_round_file, tempalt1, ',');
+                getline(comp_round_file, tempskype1, '\n');
+
+                // separate_branchwise(tempid);
+                
+                for(int j=0; j<9; j++)//string std_id to int std_id
+                {
+                    int temp;
+                    temp=(tempid1[j]-'0')* pow(10,8-j);
+                    tempID1= tempID1+temp;
+                }
+                Student *sptr1 = cptr->rptr[0]->hashStudentId(tempID1);
+                sptr1->setStudent(tempname1, tempdate1, tempstr1, tempend1, tempID1, tempmail1, tempPro1, tempcont1, tempwhats1, tempalt1, tempskype1);
+
             while(comp_round_file.peek() != EOF){
                 int tempID=0;
                 string tempsr, tempname, tempdate, tempstatus, tempstr, tempend, tempid, tempmail, tempPro, tempcont, tempwhats, tempalt, tempskype;
@@ -421,7 +448,7 @@ void set_data(string year_file, DataBase* All_std_data){
 
                 
             }
-            //cout<< All_std_data->hashRtYear(int_year)->accessHashCompName(comp_name)->R1.student[1].sName;
+            cout<< All_std_data->hashRtYear(int_year)->accessHashCompName(comp_name)->R1.student[0].sName << endl;
             comp_round_file.close();
 
             for(int i=1; i<5 ; i++){
@@ -458,11 +485,39 @@ void set_data(string year_file, DataBase* All_std_data){
                 
                 //comp_round_file.seekg(-8,comp_round_file.cur);//pointing to 1
 
-                comp_round_file.seekg(comp_round_file.tellg()-  streampos(8));//pointing to 1
+                // comp_round_file.seekg(comp_round_file.tellg()-  streampos(8));//pointing to 1
                 // string s;
                 // getline(comp_round_file,s,'\n');
                 // cout<<s<<endl;
                 //cout<<"Hi"<<endl;
+
+                tempID1=0;
+                tempname1, tempdate1, tempstatus1, tempstr1, tempend1, tempid1, tempmail1, tempPro1, tempcont1, tempwhats1, tempalt1, tempskype1;
+                //getline(comp_round_file, tempsr, ',');
+                getline(comp_round_file, tempname1, ',');
+                getline(comp_round_file, tempdate1, ',');
+                getline(comp_round_file, tempstatus1, ',');
+                getline(comp_round_file, tempstr1, ',');
+                getline(comp_round_file, tempend1, ',');
+                getline(comp_round_file, tempid1, ',');
+                getline(comp_round_file, tempmail1, ',');
+                getline(comp_round_file, tempPro1, ',');
+                getline(comp_round_file, tempcont1, ',');
+                getline(comp_round_file, tempwhats1, ',');
+                getline(comp_round_file, tempalt1, ',');
+                getline(comp_round_file, tempskype1, '\n');
+
+                // separate_branchwise(tempid);
+                
+                for(int j=0; j<9; j++)//string std_id to int std_id
+                {
+                    int temp;
+                    temp=(tempid1[j]-'0')* pow(10,8-j);
+                    tempID1= tempID1+temp;
+                }
+                Student *sptr1 = cptr->rptr[i]->hashStudentId(tempID1);
+                sptr1->setStudent(tempname1, tempdate1, tempstr1, tempend1, tempID1, tempmail1, tempPro1, tempcont1, tempwhats1, tempalt1, tempskype1);
+
                 while(comp_round_file.peek() != EOF){
                     int tempID=0;
                     string tempsr, tempname, tempdate, tempstatus, tempstr, tempend, tempid, tempmail, tempPro, tempcont, tempwhats, tempalt, tempskype;
@@ -490,8 +545,8 @@ void set_data(string year_file, DataBase* All_std_data){
                     sptr->setStudent(tempname, tempdate, tempstr, tempend, tempID, tempmail, tempPro, tempcont, tempwhats, tempalt, tempskype);
                     
                 }          
-                //cout<< All_std_data->hashRtYear(int_year)->accessHashCompName(comp_name)->rptr[i]->student[1].sName;
-                // cout << "hello"<<endl;
+                cout<< All_std_data->hashRtYear(int_year)->accessHashCompName(comp_name)->rptr[i]->student[0].sName << endl;
+                //cout << "hello"<<endl;
                 comp_round_file.close();
             }     
         }
