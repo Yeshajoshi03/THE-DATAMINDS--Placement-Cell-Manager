@@ -531,7 +531,7 @@ void set_data(string year_file, DataBase *All_std_data)
     my_yr_file.close();
 }
 
-
+}
 void Student_Complete_Information(string ID, DataBase D)
 {
     int year;
