@@ -557,27 +557,27 @@ void set_data(string year_file, DataBase* All_std_data){
     }
     my_yr_file.close();
 }
-void Student_Complete_Information(string ID,DataBase D){
-    int year;
-    if(ID.at(3)==5){
-        year=2019;
-    }
-    else if(ID.at(3)==6){
-        year=2020;
-    }
-    else if(ID.at(3)==7){
-        year=2021;
-    }
-    else if(ID.at(3)==8){
-        year=2022;
-    }
-    else if(ID.at(3)==9){
-        year=2023;
-    }   
-    D.hashRtYear(year)->
+// void Student_Complete_Information(string ID,DataBase D){
+//     int year;
+//     if(ID.at(3)==5){
+//         year=2019;
+//     }
+//     else if(ID.at(3)==6){
+//         year=2020;
+//     }
+//     else if(ID.at(3)==7){
+//         year=2021;
+//     }
+//     else if(ID.at(3)==8){
+//         year=2022;
+//     }
+//     else if(ID.at(3)==9){
+//         year=2023;
+//     }   
+//     D.hashRtYear(year)->
 
+// }
 
-}
 int students_in_comp_year(DataBase d, int y, string company_name);
 int main()
 {   
@@ -601,7 +601,7 @@ int main()
     //         int_year= int_year+temp;
     //     }
     // cout<<int_year<<endl;
-    database
+    // database
     
 }
 int students_in_company(DataBase d,string company_name){//total number of students in a company till last year
