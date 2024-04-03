@@ -140,7 +140,9 @@ class Year
         company = new Company[noC];
         No_of_Comp=noC;
     }
-
+    Company* comptr(){
+        return this->company;
+    }
     void setYear(int c, int r, int i, string n);
 
     void set_yr(int y){
@@ -223,6 +225,7 @@ class DataBase
         year = new Year[y];
         No_yr = y;
     }
+    friend void Student_Complete_Information(string ID);
 
     void allocateYearMemory(int y)
     {
@@ -417,23 +420,26 @@ void set_data(string year_file, DataBase* All_std_data){
         }
     }
 }
-void Student_Complete_Information(string ID){
+void Student_Complete_Information(string ID,DataBase D){
     int year;
-    if(ID.at(3)==5 && ID.at()){
-        year=2019;
-    }
-    if(ID.at(3)==6){
-        year=2020;
-    }
-    if(ID.at(3)==7){
-        year=2021;
-    }
-    if(ID.at(3)==8){
-        year=2019;
-    }
     if(ID.at(3)==5){
         year=2019;
     }
+    else if(ID.at(3)==6){
+        year=2020;
+    }
+    else if(ID.at(3)==7){
+        year=2021;
+    }
+    else if(ID.at(3)==8){
+        year=2022;
+    }
+    else if(ID.at(3)==9){
+        year=2023;
+    }   
+    D.hashRtYear(year)->
+
+
 }
 
 int main()
