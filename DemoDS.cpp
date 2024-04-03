@@ -417,7 +417,24 @@ void set_data(string year_file, DataBase* All_std_data){
         }
     }
 }
-
+void Student_Complete_Information(string ID){
+    int year;
+    if(ID.at(3)==5 && ID.at()){
+        year=2019;
+    }
+    if(ID.at(3)==6){
+        year=2020;
+    }
+    if(ID.at(3)==7){
+        year=2021;
+    }
+    if(ID.at(3)==8){
+        year=2019;
+    }
+    if(ID.at(3)==5){
+        year=2019;
+    }
+}
 
 int main()
 {   
@@ -428,6 +445,7 @@ int main()
     // x=students_in_company(database,"Google");
 
     cout << database.no_of_years();
+    database
     
 }
 int students_in_company(DataBase d,string company_name){//total number of students in a company till last year
@@ -435,7 +453,8 @@ int students_in_company(DataBase d,string company_name){//total number of studen
     for(int i=0; i<d.no_of_years() ; i++){
         if(d.year[i].accessHashCompName(company_name) == NULL){
             continue;
-        }else{
+        }
+        else{
             num=num+ d.year[i].accessHashCompName(company_name)->Final.numS;
         } 
     }
