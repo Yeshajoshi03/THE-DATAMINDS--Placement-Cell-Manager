@@ -502,26 +502,70 @@ void set_data(string year_file, DataBase* All_std_data){
     }
     my_yr_file.close();
 }
+
+int vectorToInt(const std::vector<int>& vec) {
+    int result = 0;
+    for (size_t i = 0; i < vec.size(); ++i) {
+        result += vec[i] * pow(10, vec.size() - 1 - i); // This will place digits in correct positions
+    }
+    return result;
+}       
 void Student_Complete_Information(string ID,DataBase D){
-    int year;
-    if(ID.at(3)==5){
-        year=2019;
+    int id=0,b=0;
+    for(int i=0;i<9;i++){
+        id=id+((int)ID.at(i)-48)*pow(10,8-i);
     }
-    else if(ID.at(3)==6){
-        year=2020;
+    int year=0;
+    for(int i=0;i<4;i++){
+        year=year+((int)(ID[i])-48)*(pow(10,3-i));
     }
-    else if(ID.at(3)==7){
-        year=2021;
+    for(int i=4;i<6;i++){
+        b=b+((int)ID[i]-48)*(pow(10,5-i));
     }
-    else if(ID.at(3)==8){
-        year=2022;
-    }
-    else if(ID.at(3)==9){
-        year=2023;
-    }   
-    D.hashRtYear(year)->
+    year+=4;
+    int count=0,r=0;
+    for(int i=0;i<D.hashRtYear(year)->No_of_Comp;i++){
+        for(int j=0;j<5;j++){
+            if(D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId((id)==NULL)){
+                continue;
+            }
+            else{
+                count++;
+                r++;
+                if(count==1){
+                    cout<<"The name of student is : "<< D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->sName<<endl;
+                    cout<<"The contact no. of student is : "<<D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->contact_no<<endl;
+                    cout<<"The email ID of student is : "<<D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->email<<endl;  
+                    cout<<"The Whatsapp no. of stdudent is : "<<D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->Whatsapp_no<<endl;
+                    cout<<"The skype ID of student is: "<<D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->skypeID<<endl;
+                    cout<<"The program of student enrolled is : "<<D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->program<<endl;
+                }
+            }
+            if(r==1){
+                cout <<"The student appeared for Company "<<i<<" which is : "<<D.hashRtYear(year)->company[i].cName<< endl;
+                cout <<"He cleared till Round "<<r<<endl;
+            }
+            else if(r==2){
+                cout <<"The student appeared for Company "<<i<<" which is : "<<D.hashRtYear(year)->company[i].cName<< endl;
+                cout <<"He cleared till Round "<<r<<endl;
+            }
+            else if(r==3){
+                cout <<"The student appeared for Company "<<i<<" which is : "<<D.hashRtYear(year)->company[i].cName<< endl;
+                cout <<"He cleared till Round "<<r<<endl;
+            }
+            else if(r==4){
+                cout <<"The student appeared for Company "<<i<<" which is : "<<D.hashRtYear(year)->company[i].cName<< endl;
+                cout <<"He cleared till Round "<<r<<endl;
+            }
+            else if(r==5){
+                cout <<"The student appeared for Company "<<i<<" which is : "<<D.hashRtYear(year)->company[i].cName<< endl;
+                cout <<"He cleared till Round "<<r<<endl;
+            }
+                // D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)==;
+        }
 
 
+    }
 }
 int students_in_comp_year(DataBase d, int y, string company_name);
 int main()
@@ -546,7 +590,7 @@ int main()
     //         int_year= int_year+temp;
     //     }
     // cout<<int_year<<endl;
-    database
+    // database
     
 }
 int students_in_company(DataBase d,string company_name){//total number of students in a company till last year
