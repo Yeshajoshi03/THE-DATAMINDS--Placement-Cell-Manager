@@ -7,11 +7,11 @@ int random_salary_genrator()
 {
     srand(time(NULL));
 
-    int num = rand()%90;
+    int num = rand() % 90;
 
-    if(num >= 5)
+    if (num >= 5)
     {
-        return num*100000;
+        return num * 100000;
     }
     else
     {
@@ -155,7 +155,7 @@ private:
     int highest_package, lowest_package;
 
 public:
-Year():highest_package(0), lowest_package(9000000){}
+    Year() : highest_package(0), lowest_package(9000000) {}
 
     friend int highest_salery_year(DataBase *d, int y);
     friend int lowest_salery_year(DataBase *d, int y);
@@ -170,7 +170,7 @@ Year():highest_package(0), lowest_package(9000000){}
     }
     void setYear(int c, int r, int i, string n);
     friend void set_data(string year_file, DataBase *);
-    
+
     void set_yr(int y)
     {
         yr = y;
@@ -276,7 +276,6 @@ public:
         return &year[y % No_yr];
     }
     friend int students_in_company(DataBase d, string company_name);
-    
 };
 
 int highest_salery_year(DataBase *d, int y)
@@ -312,24 +311,35 @@ int count(ifstream *f)
     }
     return c;
 }
-
-int MDes = 0, MIct = 0, MScIt = 0, MScDS = 0, BIct = 0, BIctCs = 0, BMnc = 0, BEvd = 0; // globally declared
-
-void separate_branchwise(string str)
+vector<Student *> BIct, MDes, MIct, MScIt, MScDS, BIctCs, BMnc, BEvd;
+// int MDes=0,MIct=0,MScIt=0, MScDS=0,BIct=0, BIctCs=0, BMnc=0, BEvd=0;//globally declared
+void separate_branchwise(string str, Student *s)
 {
-    if (str[5] == '0')
+    cout << "In function" << endl;
+    if (str[4] == '0')
     { // Bachelors
-        if (str[6] == '1' && str[7] != '4')
-            BIct++;
-        else if (str[6] == '1' && str[7] == '4')
-            BIctCs++;
-        else if (str[6] == '3')
-            BMnc++;
-        else if (str[6] == '4')
-            BEvd++;
+        if (str[5] == '1' && str[6] != '4')
+        {
+            BIct.push_back(s);
+            // cout<<"Size: "<<BIct.size();
+        }
+        else if (str[5] == '1' && str[6] == '4')
+            BIctCs.push_back(s);
+        else if (str[5] == '3')
+            BMnc.push_back(s);
+        else if (str[5] == '4')
+            BEvd.push_back(s);
     }
     else
     { // Masters
+        if (str[5] == '2')
+            MScIt.push_back(s);
+        else if (str[5] == '4')
+            MDes.push_back(s);
+        else if (str[5] == '8')
+            MScDS.push_back(s);
+        else
+            MIct.push_back(s);
     }
 }
 
@@ -383,14 +393,14 @@ void set_data(string year_file, DataBase *All_std_data)
             Company *cptr;
             cptr = yptr->hashCompName(comp_name); // points to individual company
 
-            int sal = random_salary_genrator(); 
+            int sal = random_salary_genrator();
             cptr->salery = sal;
 
-            if(sal > yptr->highest_package)
+            if (sal > yptr->highest_package)
             {
                 yptr->highest_package = sal;
             }
-            else if(sal < yptr->lowest_package)
+            else if (sal < yptr->lowest_package)
             {
                 yptr->lowest_package = sal;
             }
@@ -454,11 +464,11 @@ void set_data(string year_file, DataBase *All_std_data)
                 getline(comp_round_file, tempalt, ',');
                 getline(comp_round_file, tempskype, '\n');
 
-                // separate_branchwise(tempid);
-
                 for (int j = 0; j < 9; j++) // string std_id to int std_id
                 {
                     int temp;
+                    temp = (tempid[j] - '0') * pow(10, 8 - j);
+                    tempID = tempID + temp;
                     temp = (tempid[j] - '0') * pow(10, 8 - j);
                     tempID = tempID + temp;
                 }
@@ -502,8 +512,6 @@ void set_data(string year_file, DataBase *All_std_data)
                 getline(comp_round_file, tempalt1, ',');
                 getline(comp_round_file, tempskype1, '\n');
 
-                // separate_branchwise(tempid);
-
                 for (int j = 0; j < 9; j++) // string std_id to int std_id
                 {
                     int temp;
@@ -513,107 +521,169 @@ void set_data(string year_file, DataBase *All_std_data)
                 Student *sptr1 = cptr->rptr[i]->hashStudentId(tempID1);
                 sptr1->setStudent(tempname1, tempdate1, tempstr1, tempend1, tempID1, tempmail1, tempPro1, tempcont1, tempwhats1, tempalt1, tempskype1);
 
-                while (comp_round_file.peek() != EOF)
+                if (i == 4)
                 {
-                    int tempID = 0;
-                    string tempsr, tempname, tempdate, tempstatus, tempstr, tempend, tempid, tempmail, tempPro, tempcont, tempwhats, tempalt, tempskype;
-                    getline(comp_round_file, tempsr, ',');
-                    getline(comp_round_file, tempname, ',');
-                    getline(comp_round_file, tempdate, ',');
-                    getline(comp_round_file, tempstatus, ',');
-                    getline(comp_round_file, tempstr, ',');
-                    getline(comp_round_file, tempend, ',');
-                    getline(comp_round_file, tempid, ',');
-                    getline(comp_round_file, tempmail, ',');
-                    getline(comp_round_file, tempPro, ',');
-                    getline(comp_round_file, tempcont, ',');
-                    getline(comp_round_file, tempwhats, ',');
-                    getline(comp_round_file, tempalt, ',');
-                    getline(comp_round_file, tempskype, '\n');
-
-                    for (int j = 0; j < 9; j++) // string std_id to int std_id
-                    {
-                        int temp;
-                        temp = (tempid[j] - '0') * pow(10, 8 - j);
-                        tempID = tempID + temp;
-                    }
-                    Student *sptr = cptr->rptr[i]->hashStudentId(tempID);
-                    sptr->setStudent(tempname, tempdate, tempstr, tempend, tempID, tempmail, tempPro, tempcont, tempwhats, tempalt, tempskype);
+                    separate_branchwise(tempid1, sptr1);
                 }
+                    while (comp_round_file.peek() != EOF)
+                    {
+                        int tempID = 0;
+                        string tempsr, tempname, tempdate, tempstatus, tempstr, tempend, tempid, tempmail, tempPro, tempcont, tempwhats, tempalt, tempskype;
+                        getline(comp_round_file, tempsr, ',');
+                        getline(comp_round_file, tempname, ',');
+                        getline(comp_round_file, tempdate, ',');
+                        getline(comp_round_file, tempstatus, ',');
+                        getline(comp_round_file, tempstr, ',');
+                        getline(comp_round_file, tempend, ',');
+                        getline(comp_round_file, tempid, ',');
+                        getline(comp_round_file, tempmail, ',');
+                        getline(comp_round_file, tempPro, ',');
+                        getline(comp_round_file, tempcont, ',');
+                        getline(comp_round_file, tempwhats, ',');
+                        getline(comp_round_file, tempalt, ',');
+                        getline(comp_round_file, tempskype, '\n');
 
-                comp_round_file.close();
+                        for (int j = 0; j < 9; j++) // string std_id to int std_id
+                        {
+                            int temp;
+                            temp = (tempid[j] - '0') * pow(10, 8 - j);
+                            tempID = tempID + temp;
+                        }
+                        Student *sptr = cptr->rptr[i]->hashStudentId(tempID);
+                        sptr->setStudent(tempname, tempdate, tempstr, tempend, tempID, tempmail, tempPro, tempcont, tempwhats, tempalt, tempskype);
+                        if (i == 4)
+                        {
+                            cout << "gone" << endl;
+                            separate_branchwise(tempid, sptr);
+                        }
+                    }
+
+                    comp_round_file.close();
+                }
             }
+
+            my_comp_file.close();
         }
 
-        my_comp_file.close();
+        my_yr_file.close();
     }
 
-    my_yr_file.close();
-}
+    // void Student_Complete_Information(string ID, DataBase D)
+    // {
+    //     int year;
+    //     if (ID.at(3) == 5)
+    //     {
+    //         year = 2019;
+    //     }
+    //     year += 4;
+    //     int counter = 0, r = 0;
+    //     for (int i = 0; i < D.hashRtYear(year)->No_of_Comp; i++)
+    //     {
+    //         for (int j = 0; j < 5; j++)
+    //         {
+    //             if (D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId((id) == NULL))
+    //             {
+    //                 continue;
+    //             }
+    //             else
+    //             {
+    //                 counter++;
+    //                 r++;
+    //                 if (counter == 1)
+    //                 {
+    //                     cout << "The name of student is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->sName << endl;
+    //                     cout << "The contact no. of student is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->contact_no << endl;
+    //                     cout << "The email ID of student is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->email << endl;
+    //                     cout << "The Whatsapp no. of stdudent is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->Whatsapp_no << endl;
+    //                     cout << "The skype ID of student is: " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->skypeID << endl;
+    //                     cout << "The program of student enrolled is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->program << endl;
+    //                 }
+    //             }
+    //         }
+    //         if (r == 1)
+    //         {
+    //             cout << "The student appeared for Company " << i << " which is : " << D.hashRtYear(year)->company[i].cName << endl;
+    //             cout << "He cleared till Round " << r << endl;
+    //         }
+    //         else if (r == 2)
+    //         {
+    //             cout << "The student appeared for Company " << i << " which is : " << D.hashRtYear(year)->company[i].cName << endl;
+    //             cout << "He cleared till Round " << r << endl;
+    //         }
+    //         else if (r == 3)
+    //         {
+    //             cout << "The student appeared for Company " << i << " which is : " << D.hashRtYear(year)->company[i].cName << endl;
+    //             cout << "He cleared till Round " << r << endl;
+    //         }
+    //         else if (r == 4)
+    //         {
+    //             cout << "The student appeared for Company " << i << " which is : " << D.hashRtYear(year)->company[i].cName << endl;
+    //             cout << "He cleared till Round " << r << endl;
+    //         }
+    //         else if (r == 5)
+    //         {
+    //             cout << "The student appeared for Company " << i << " which is : " << D.hashRtYear(year)->company[i].cName << endl;
+    //             cout << "He cleared till Round " << r << endl;
+    //         }
+    //         // D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)==;
+    //     }
+    // }
 
-void Student_Complete_Information(string ID, DataBase D)
-{
-    int year;
-    if (ID.at(3) == 5)
+    int students_in_comp_year(DataBase d, int y, string company_name);
+
+    int main()
     {
-        year = 2019;
+        DataBase database;
+
+        set_data("Year.txt", &database);
+        // int x;
+        // x=students_in_comp_year(database,2019,"Google");
+        // cout<<x;
+        // cout << database.no_of_years()<<endl;
+        // // cout<<database.year[1].accessHashCompName("Bell")->Final.numS;
+        // // cout<<"Hi";
+        // cout << database.year[0].yr<<endl;
+        // cout << database.year[1].yr<<endl;
+
+        // string st="2019";
+        // int int_year=0;//string year to int year
+        //     for(int j=0; j<4; j++){//first 4 chars from filename
+        //         int temp;
+        //         temp=(st[j]-'0')* pow(10,3-j);
+        //         int_year= int_year+temp;
+        //     }
+        // cout<<int_year<<endl;
+        // database
     }
-    else if (ID.at(3) == 6)
-    {
-        year = 2020;
-    }
-    else if (ID.at(3) == 7)
-    {
-        year = 2021;
-    }
-    else if (ID.at(3) == 8)
-    {
-        year = 2022;
-    }
-    else if (ID.at(3) == 9)
-    {
-        year = 2023;
-    }
-    // D.hashRtYear(year)->
-}
-
-int students_in_comp_year(DataBase d, int y, string company_name);
-
-
-
-int main()
-{
-    DataBase database;
-
-    set_data("Year.txt", &database);
-}
-
-int students_in_company(DataBase d, string company_name)
-{ // total number of students in a company till last year
-    int num = 0;
-    for (int i = 0; i < d.no_of_years(); i++)
-    {
-        if (d.year[i].accessHashCompName(company_name) == NULL)
+    int students_in_company(DataBase d, string company_name)
+    { // total number of students in a company till last year
+        int num = 0;
+        for (int i = 0; i < d.no_of_years(); i++)
         {
-            continue;
+            if (d.year[i].accessHashCompName(company_name) == NULL)
+            {
+                continue;
+            }
+            else
+            {
+                num = num + d.year[i].accessHashCompName(company_name)->Final.numS;
+            }
+        }
+        return num;
+    }
+
+    int students_in_comp_year(DataBase d, int y, string company_name)
+    { // Number of students placed in a particular company in a given year
+        if (d.hashRtYear(y)->accessHashCompName(company_name) != NULL)
+        {
+            return d.hashRtYear(y)->accessHashCompName(company_name)->Final.numS;
         }
         else
         {
-            num = num + d.year[i].accessHashCompName(company_name)->Final.numS;
+            return 0;
         }
     }
-    return num;
-}
-
-int students_in_comp_year(DataBase d, int y, string company_name)
-{ // Number of students placed in a particular company in a given year
-    // if(d.hashRtYear(y)->accessHashCompName(company_name) != NULL){
-    cout << "hi";
-    return d.hashRtYear(y)->accessHashCompName(company_name)->Final.numS;
-    // }else{
-    // return 0;
+    // int students_in_comp_branch_yearly(DataBase d, int y, string company_name, string branch)
+    // {
+    //     d.hashRtYear(y)->accessHashCompName(company_name)->Final;
     // }
-}
-// int students_in_comp_branch_yearly(DataBase d, int y,string company_name, string branch){
-//     d.hashRtYear(y)->accessHashCompName(company_name)->Final;
-// }
