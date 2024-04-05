@@ -199,6 +199,7 @@ public:
 
 
 
+    friend int students_branch_yearly(DataBase d, int y, int branch_code);
 };
 
 class Year
@@ -301,6 +302,7 @@ public:
         }
         return NULL;
     }
+    friend int students_branch_yearly(DataBase d, int y, int branch_code);
 };
 
 class DataBase
@@ -319,7 +321,7 @@ public:
         year = new Year[y];
         No_yr = y;
     }
-    friend void Student_Complete_Information(string ID,DataBase D);
+    friend void Student_Complete_Information(string ID, DataBase D);
 
     void allocateYearMemory(int y)
     {
@@ -610,6 +612,7 @@ void set_data(string year_file, DataBase *All_std_data)
         my_yr_file.close();
     }
 
+
     // void Student_Complete_Information(string ID, DataBase D)
     // {
     //     int year;
@@ -674,7 +677,7 @@ void set_data(string year_file, DataBase *All_std_data)
     int students_in_comp_year(DataBase d, int y, string company_name);
 int students_in_comp_branch_yearly(DataBase d, int y, string company_name, int branch_code);
 void display(vector<Student *> v);
-
+int students_branch_yearly(DataBase d, int y, int branch_code);
 
     int main()
     {
@@ -699,6 +702,22 @@ void display(vector<Student *> v);
     //     }
     // cout<<int_year<<endl;
     // database
+    int branch_code;
+    int Prog;
+    cout << "Enter 0 for B.Tech and 1 for M.Tech" << endl;
+    cin >> Prog;
+    cout << "Enter Branchcode for respective branches: " << endl
+         << "Enter " << endl
+         << "01 for B.Tech ICT" << endl
+         << "0144 for B.Tech ICT-CS" << endl
+         << "03 for B.Tech MNC" << endl
+         << "04 for B.Tech EVD" << endl
+         << "11 for M.Tech ICT" << endl;
+    cin >> branch_code;
+    cout << students_in_comp_branch_yearly(database, 2019, "Google", branch_code) << endl;
+    cout<< students_branch_yearly(database,2019,branch_code);
+
+    return 0;
 }
 int students_in_company(DataBase d, string company_name)
 { // total number of students in a company till last year
@@ -743,24 +762,31 @@ int students_in_comp_branch_yearly(DataBase d, int y, string company_name, int b
         break;
     case (0144):
         result = d.hashRtYear(y)->accessHashCompName(company_name)->BIctCs.size();
+        display(d.hashRtYear(y)->accessHashCompName(company_name)->BIctCs);
         break;
     case (03):
         result = d.hashRtYear(y)->accessHashCompName(company_name)->BMnc.size();
+        display(d.hashRtYear(y)->accessHashCompName(company_name)->BMnc);
         break;
     case (04):
         result = d.hashRtYear(y)->accessHashCompName(company_name)->BEvd.size();
+        display(d.hashRtYear(y)->accessHashCompName(company_name)->BEvd);
         break;
     case (11):
         result = d.hashRtYear(y)->accessHashCompName(company_name)->MIct.size();
+        display(d.hashRtYear(y)->accessHashCompName(company_name)->MIct);
         break;
     case (12):
         result = d.hashRtYear(y)->accessHashCompName(company_name)->MScIt.size();
+        display(d.hashRtYear(y)->accessHashCompName(company_name)->MScIt);
         break;
     case (14):
         result = d.hashRtYear(y)->accessHashCompName(company_name)->MDes.size();
+        display(d.hashRtYear(y)->accessHashCompName(company_name)->MDes);
         break;
     case (18):
         result = d.hashRtYear(y)->accessHashCompName(company_name)->MScDS.size();
+        display(d.hashRtYear(y)->accessHashCompName(company_name)->MScDS);
         break;
     }
 
@@ -773,4 +799,17 @@ void display(vector<Student *> v)
     {
         cout << v[i]->sName << endl;
     }
+}
+
+int students_branch_yearly(DataBase d, int y, int branch_code)
+{
+    int result=0;
+    for(int i=0 ; i<d.hashRtYear(y)->No_of_Comp ; i++){
+        result=result+ d.hashRtYear(y)->company[i].BIct.size();
+        display(d.hashRtYear(y)->company[i].BIct);
+    }
+    ofstream fp;
+    fp.open("students_branch_yearly.csv");
+    
+    return result;
 }
