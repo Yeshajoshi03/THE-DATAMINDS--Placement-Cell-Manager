@@ -551,16 +551,16 @@ void Student_Complete_Information(string ID,DataBase D){
         b=b+((int)ID[i]-48)*(pow(10,5-i));
     }
     year+=4;
-    int count=0,r=0;
+    int counter=0,r=0;
     for(int i=0;i<D.hashRtYear(year)->No_of_Comp;i++){
         for(int j=0;j<5;j++){
             if(D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId((id)==NULL)){
                 continue;
             }
             else{
-                count++;
+                counter++;
                 r++;
-                if(count==1){
+                if(counter==1){
                     cout<<"The name of student is : "<< D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->sName<<endl;
                     cout<<"The contact no. of student is : "<<D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->contact_no<<endl;
                     cout<<"The email ID of student is : "<<D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->email<<endl;  
@@ -569,6 +569,7 @@ void Student_Complete_Information(string ID,DataBase D){
                     cout<<"The program of student enrolled is : "<<D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->program<<endl;
                 }
             }
+        }
             if(r==1){
                 cout <<"The student appeared for Company "<<i<<" which is : "<<D.hashRtYear(year)->company[i].cName<< endl;
                 cout <<"He cleared till Round "<<r<<endl;
@@ -590,8 +591,6 @@ void Student_Complete_Information(string ID,DataBase D){
                 cout <<"He cleared till Round "<<r<<endl;
             }
                 // D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)==;
-        }
-
 
     }
 }
