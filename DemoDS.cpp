@@ -1,6 +1,24 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 class DataBase;
+
+int random_salary_genrator()
+{
+    srand(time(NULL));
+
+    int num = rand()%90;
+
+    if(num >= 5)
+    {
+        return num*100000;
+    }
+    else
+    {
+        return random_salary_genrator();
+    }
+}
+
 class Student
 {
 private:
@@ -89,7 +107,6 @@ public:
         }
     }
 
-    friend int main();
     friend int students_in_company(DataBase d, string company_name);
     friend int students_in_comp_year(DataBase d, int y, string company_name);
     friend int students_in_comp_branch_yearly(DataBase d, int y, string company_name, string branch);
@@ -99,7 +116,7 @@ class Company
 {
 private:
     string cName;
-    // int salery;
+    int salery;
 
     Round R1;
     Round R2;
@@ -122,7 +139,6 @@ public:
         cName = s;
     }
     friend class Year;
-    friend int main();
     friend void set_data(string year_file, DataBase *);
     friend int students_in_company(DataBase d, string company_name);
     friend int students_in_comp_year(DataBase d, int y, string company_name);
@@ -136,7 +152,13 @@ private:
     int No_of_Comp;
     Company *company;
 
+    int highest_package, lowest_package;
+
 public:
+Year():highest_package(0), lowest_package(9000000){}
+
+    friend int highest_salery_year(DataBase *d, int y);
+    friend int lowest_salery_year(DataBase *d, int y);
     void allocateCompMemory(int noC)
     {
         company = new Company[noC];
@@ -147,7 +169,8 @@ public:
         return this->company;
     }
     void setYear(int c, int r, int i, string n);
-
+    friend void set_data(string year_file, DataBase *);
+    
     void set_yr(int y)
     {
         yr = y;
@@ -164,7 +187,6 @@ public:
         int i = 0;
         while (1)
         {
-
             int h;
 
             h = (comp_code % No_of_Comp + i) % No_of_Comp; // double hashing
@@ -254,8 +276,18 @@ public:
         return &year[y % No_yr];
     }
     friend int students_in_company(DataBase d, string company_name);
-    friend int main();
+    
 };
+
+int highest_salery_year(DataBase *d, int y)
+{
+    return d->hashRtYear(y)->highest_package;
+}
+
+int lowest_salery_year(DataBase *d, int y)
+{
+    return d->hashRtYear(y)->lowest_package;
+}
 
 void startdata(ifstream *f)
 {
@@ -280,7 +312,9 @@ int count(ifstream *f)
     }
     return c;
 }
+
 int MDes = 0, MIct = 0, MScIt = 0, MScDS = 0, BIct = 0, BIctCs = 0, BMnc = 0, BEvd = 0; // globally declared
+
 void separate_branchwise(string str)
 {
     if (str[5] == '0')
@@ -298,6 +332,7 @@ void separate_branchwise(string str)
     { // Masters
     }
 }
+
 void set_data(string year_file, DataBase *All_std_data)
 {
 
@@ -340,8 +375,6 @@ void set_data(string year_file, DataBase *All_std_data)
         my_comp_file.close();
         my_comp_file.open(yearF);
 
-        // ROUND
-
         for (int j = 0; j < No_c; j++)
         {
             string comp_name;
@@ -349,6 +382,18 @@ void set_data(string year_file, DataBase *All_std_data)
 
             Company *cptr;
             cptr = yptr->hashCompName(comp_name); // points to individual company
+
+            int sal = random_salary_genrator(); 
+            cptr->salery = sal;
+
+            if(sal > yptr->highest_package)
+            {
+                yptr->highest_package = sal;
+            }
+            else if(sal < yptr->lowest_package)
+            {
+                yptr->lowest_package = sal;
+            }
 
             ifstream comp_round_file;
             comp_round_file.open(comp_name); // points to round1 file of a company
@@ -506,7 +551,6 @@ void set_data(string year_file, DataBase *All_std_data)
     my_yr_file.close();
 }
 
-
 void Student_Complete_Information(string ID, DataBase D)
 {
     int year;
@@ -534,12 +578,16 @@ void Student_Complete_Information(string ID, DataBase D)
 }
 
 int students_in_comp_year(DataBase d, int y, string company_name);
+
+
+
 int main()
 {
     DataBase database;
 
     set_data("Year.txt", &database);
 }
+
 int students_in_company(DataBase d, string company_name)
 { // total number of students in a company till last year
     int num = 0;
