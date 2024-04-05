@@ -32,7 +32,10 @@ public:
         skypeID = skypeid;
     }
     friend class Round;
-    friend void Student_Complete_Information(string ID);
+    friend int students_in_company(DataBase d, string company_name);
+    friend void Student_Complete_Information(string ID, DataBase D);
+
+
 
 };
 
@@ -95,7 +98,10 @@ public:
     friend int students_in_company(DataBase d, string company_name);
     friend int students_in_comp_year(DataBase d, int y, string company_name);
     friend int students_in_comp_branch_yearly(DataBase d, int y, string company_name, string branch);
-    friend void Student_Complete_Information(string ID);
+    friend int students_in_company(DataBase d, string company_name);
+    friend void Student_Complete_Information(string ID, DataBase D);
+
+
 
 };
 
@@ -131,7 +137,10 @@ public:
     friend int students_in_company(DataBase d, string company_name);
     friend int students_in_comp_year(DataBase d, int y, string company_name);
     friend int students_in_comp_branch_yearly(DataBase d, int y, string company_name, string branch);
-    friend void Student_Complete_Information(string ID);
+    friend int students_in_company(DataBase d, string company_name);
+    friend void Student_Complete_Information(string ID, DataBase D);
+
+
 
 };
 
@@ -153,8 +162,7 @@ public:
         return this->company;
     }
     void setYear(int c, int r, int i, string n);
-    friend void Student_Complete_Information(string ID);
-
+    friend int students_in_company(DataBase d, string company_name);
     void set_yr(int y)
     {
         yr = y;
@@ -186,6 +194,8 @@ public:
             }
         }
     }
+    friend void Student_Complete_Information(string ID, DataBase D);
+
     Company *accessHashCompName(string company_name)
     {
         int comp_code = 0; // company name to company code given by user
@@ -239,7 +249,7 @@ public:
         year = new Year[y];
         No_yr = y;
     }
-    friend void Student_Complete_Information(string ID);
+    friend void Student_Complete_Information(string ID,DataBase D);
 
     void allocateYearMemory(int y)
     {
@@ -261,6 +271,8 @@ public:
         return &year[y % No_yr];
     }
     friend int students_in_company(DataBase d, string company_name);
+    friend void Student_Complete_Information(string ID, DataBase D);
+
     friend int main();
 };
 
@@ -531,22 +543,12 @@ void set_data(string year_file, DataBase *All_std_data)
                     comp_round_file.close();
                 }
             }
-
             my_comp_file.close();
         }
-
         my_yr_file.close();
     }
+}
 
-    int vectorToInt(const std::vector<int> &vec)
-    {
-        int result = 0;
-        for (size_t i = 0; i < vec.size(); ++i)
-        {
-            result += vec[i] * pow(10, vec.size() - 1 - i); // This will place digits in correct positions
-        }
-        return result;
-    }
     void Student_Complete_Information(string ID, DataBase D)
     {
         int id = 0, b = 0;
