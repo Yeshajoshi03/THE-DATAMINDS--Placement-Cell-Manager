@@ -621,6 +621,18 @@ int main()
     // database
     
 }
+void student_company_application(DataBase s, int year, string company)
+{
+   if(s.hashRtYear(year)->accessHashCompName(company)==NULL)
+   {
+    cout<<"Company did not came for placement"<<endl;
+   }
+   else
+   {
+    int x=s.hashRtYear(year)->accessHashCompName(company).R1.numS;
+    cout<<x<<" Student applied for the company"<<endl;
+   }
+}
 int students_in_company(DataBase d,string company_name){//total number of students in a company till last year
     int num=0;
     for(int i=0; i<d.no_of_years() ; i++){
