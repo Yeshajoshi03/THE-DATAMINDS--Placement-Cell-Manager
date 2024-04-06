@@ -55,7 +55,7 @@ public:
     }
     friend class Round;
     friend void display(vector<Student *> v);
-    friend void Student_Complete_Information(string ID, DataBase D);
+    friend void Student_Complete_Information(int ID, DataBase D);
     friend void infile(vector<Student *> v, ofstream &f);
     friend int students_in_company(DataBase d, string company_name);
 };
@@ -105,7 +105,6 @@ public:
             h = (id % numS + i) % numS; // linear probing
             if (student[h].id == id)
             {
-                cout<<student[h].sName<<endl;
                 return &student[h];
                 break;
             }
@@ -182,7 +181,7 @@ public:
     friend int students_in_comp_year(DataBase d, int y, string company_name);
     friend int students_in_comp_branch_yearly(DataBase d, int y, string company_name, int branch_code);
     friend int students_in_company(DataBase d, string company_name);
-    friend void Student_Complete_Information(string ID, DataBase D);
+    friend void Student_Complete_Information(int ID, DataBase D);
     friend void students_in_comp_program_yearly(DataBase d, int y, string company_name);
     friend int students_branch_yearly(DataBase d, int y, int branch_code);
     friend void student_company_application(DataBase s, int year, string company);
@@ -251,7 +250,7 @@ public:
             }
         }
     }
-    friend void Student_Complete_Information(string ID, DataBase D);
+    friend void Student_Complete_Information(int ID, DataBase D);
 
     Company *accessHashCompName(string company_name)
     {
@@ -364,7 +363,6 @@ int count(ifstream *f)
     return c;
 }
 
-
 void set_data(string year_file, DataBase *All_std_data)
 {
 
@@ -457,7 +455,7 @@ void set_data(string year_file, DataBase *All_std_data)
             getline(comp_round_file, tempalt1, ',');
             getline(comp_round_file, tempskype1, '\n');
 
-            tempID1=stoi(tempid1);
+            tempID1 = stoi(tempid1);
             Student *sptr1 = cptr->rptr[0]->hashStudentId(tempID1);
             sptr1->setStudent(tempname1, tempdate1, tempstr1, tempend1, tempID1, tempmail1, tempPro1, tempcont1, tempwhats1, tempalt1, tempskype1);
 
@@ -479,7 +477,7 @@ void set_data(string year_file, DataBase *All_std_data)
                 getline(comp_round_file, tempalt, ',');
                 getline(comp_round_file, tempskype, '\n');
 
-                tempID=stoi(tempid);
+                tempID = stoi(tempid);
                 Student *sptr = cptr->rptr[0]->hashStudentId(tempID);
                 sptr->setStudent(tempname, tempdate, tempstr, tempend, tempID, tempmail, tempPro, tempcont, tempwhats, tempalt, tempskype);
             }
@@ -520,7 +518,7 @@ void set_data(string year_file, DataBase *All_std_data)
                 getline(comp_round_file, tempalt1, ',');
                 getline(comp_round_file, tempskype1, '\n');
 
-                tempID1=stoi(tempid1);
+                tempID1 = stoi(tempid1);
                 Student *sptr1 = cptr->rptr[i]->hashStudentId(tempID1);
                 sptr1->setStudent(tempname1, tempdate1, tempstr1, tempend1, tempID1, tempmail1, tempPro1, tempcont1, tempwhats1, tempalt1, tempskype1);
 
@@ -547,7 +545,7 @@ void set_data(string year_file, DataBase *All_std_data)
                     getline(comp_round_file, tempalt, ',');
                     getline(comp_round_file, tempskype, '\n');
 
-                    tempID=stoi(tempid);
+                    tempID = stoi(tempid);
                     Student *sptr = cptr->rptr[i]->hashStudentId(tempID);
                     sptr->setStudent(tempname, tempdate, tempstr, tempend, tempID, tempmail, tempPro, tempcont, tempwhats, tempalt, tempskype);
                     if (i == 4)
@@ -565,63 +563,65 @@ void set_data(string year_file, DataBase *All_std_data)
     my_yr_file.close();
 }
 
-void Student_Complete_Information(string ID, DataBase D)
+void Student_Complete_Information(int ID, DataBase D)
 {
-    
-    int id = 0, b = 0;
-    
-    for (int i = 0; i < 9; i++){
-        id = id + ((int)ID.at(i) - 48) * pow(10, 8 - i);
-    }
-    int year = 0;
-    for (int i = 0; i < 4; i++){
-        year = year + ((int)(ID[i]) - 48) * (pow(10, 3 - i));
-    }
-    for (int i = 4; i < 6; i++)
-    {
-        b = b + ((int)ID[i] - 48) * (pow(10, 5 - i));
-    }
-    if(ID[4]==0){           
-        year+=4;
-        cout <<"test"<<endl;
-    }
-    else if(ID[4]==1){
-        year+=2;
-        cout <<"test"<<endl;
-    }  
-    // cout<<year<<endl;
-    cout<<D.hashRtYear(2020)->accessHashCompName("Google")->R1.accesshashStdId(201601244)->sName;  
-    // for (int i = 0; i < D.hashRtYear(year)->No_of_Comp; i++)
-    // {
-    //     int counter = 0, r = 0;
-    //     for (int j = 0; j < 5; j++)
-    //     {
-    //         if (D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)== NULL)
-    //         {
-    //             continue;
-    //         }
-    //         else
-    //         {
-    //             counter++;
-    //             r++;
-    //             if (counter == 1)
-    //             {
-    //                 cout << "The name of student is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->sName << endl;
-    //                 cout << "The contact no. of student is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->contact_no << endl;
-    //                 cout << "The email ID of student is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->email << endl;
-    //                 cout << "The Whatsapp no. of stdudent is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->Whatsapp_no << endl;
-    //                 cout << "The skype ID of student is: " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->skypeID << endl;
-    //                 cout << "The program of student enrolled is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(id)->program << endl;
-    //             }
-    //         }
-    //     }
-    //     if (r >0)
-    //     {
-    //         cout << "The student appeared for Company " << i << " which is : " << D.hashRtYear(year)->company[i].cName << endl;
-    //         cout << "He cleared till Round " << r << endl;
-    //     }
-        // D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)==;
+
+    int year = ID / 100000;
+
+    int check = (ID / 10000) % 10;
+    // int id = 0, b = 0;
+
+    // for (int i = 0; i < 9; i++){
+    //     id = id + ((int)ID.at(i) - 48) * pow(10, 8 - i);
     // }
+    // int year = 0;
+    // for (int i = 0; i < 4; i++){
+    //     year = year + ((int)(ID[i]) - 48) * (pow(10, 3 - i));
+    // }
+    // for (int i = 4; i < 6; i++)
+    // {
+    //     b = b + ((int)ID[i] - 48) * (pow(10, 5 - i));
+    // }
+    if (check == 0)
+    {
+        year += 4;
+        // cout << "test" << endl;
+    }
+    else if (check == 1)
+    {
+        year += 2;
+        // cout << "test" << endl;
+    }
+    // cout << year << endl;
+    // cout<<D.hashRtYear(2020)->accessHashCompName("Google")->R1.accesshashStdId(201601244)->sName;
+    for (int i = 0; i < D.hashRtYear(year)->No_of_Comp; i++)
+    {
+        int counter = 0;
+        for (int j = 0; j < 5; j++)
+        {
+            if (D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID) != NULL)
+            {
+
+                counter++;
+
+                if (counter == 1)
+                {
+                    cout << "The name of student is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->sName << endl;
+                    cout << "The contact no. of student is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->contact_no << endl;
+                    cout << "The email ID of student is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->email << endl;
+                    cout << "The Whatsapp no. of stdudent is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->Whatsapp_no << endl;
+                    cout << "The skype ID of student is: " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->skypeID << endl;
+                    cout << "The program of student enrolled is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->program << endl;
+                }
+            }
+        }
+        if (counter > 0)
+        {
+            cout << "The student appeared for Company " << D.hashRtYear(year)->company[i].cName << endl;
+            cout << "He cleared till Round " << counter << endl;
+        }
+        // D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)==;
+    }
 }
 
 void student_company_application(DataBase s, int year, string company);
@@ -640,14 +640,6 @@ int main()
     set_data("Year.txt", &database);
     int year;
     string company;
-    // int x;
-    // x=students_in_comp_year(database,2019,"Google");
-    // cout<<x;
-    // cout << database.no_of_years()<<endl;
-    // // cout<<database.year[1].accessHashCompName("Bell")->Final.numS;
-    // // cout<<"Hi";
-    // cout << database.year[0].yr<<endl;
-    // cout << database.year[1].yr<<endl;
 
     // string st="2019";
     // int int_year=0;//string year to int year
@@ -675,39 +667,35 @@ int main()
     // cin >> branch_code;
     // cout << students_in_comp_branch_yearly(database, 2019, "Google", branch_code) << endl;
     // cout << students_branch_yearly(database, 2019, branch_code);
-    
 
-    
     // cout<<"Enter company and year to get number of students who applied to a specific company"<<endl;\
     // cin>>year;
     // cin>>company;
-    //student_company_application(database, year, company);
+    // student_company_application(database, year, company);
     // int year2;
     // string company2;
     // cout<<"Enter the name of the company and year to get the number of studets who are placed according to the program"<<endl;
     // cin>>year2;
     // cin>>company2;
-    Student_Complete_Information("201601123",database);
+    Student_Complete_Information(201601044, database);
     // students_in_comp_program_yearly(database, year2, company2);
     // cout<< students_in_company(database,"Sprinkler");
     // cout<<students_in_comp_year(database,2020,"Bell");
     // cout<<students_branch_yearly(database,2020,01);
     return 0;
-
-    
 }
 
 void student_company_application(DataBase s, int year, string company)
 {
-   if(s.hashRtYear(year)->accessHashCompName(company)==NULL)
-   {
-    cout<<"Company did not came for placement"<<endl;
-   }
-   else
-   {
-    int x= s.hashRtYear(year)->accessHashCompName(company)->R1.numS;
-    cout<<x<<" Student applied for the company"<<endl;
-   }
+    if (s.hashRtYear(year)->accessHashCompName(company) == NULL)
+    {
+        cout << "Company did not came for placement" << endl;
+    }
+    else
+    {
+        int x = s.hashRtYear(year)->accessHashCompName(company)->R1.numS;
+        cout << x << " Student applied for the company" << endl;
+    }
 }
 
 int students_in_company(DataBase d, string company_name)
@@ -723,15 +711,7 @@ int students_in_company(DataBase d, string company_name)
         {
             num = num + d.year[i].accessHashCompName(company_name)->Final.numS;
         }
-        for(int j=0; j<d.year[i].No_of_Comp ; j++){
-            cout << "no of comp: "<<j << endl;
-            for(int k=0; k<d.year[i].company[j].Final.numS ; k++){
-                cout<<d.year[i].company[j].Final.student[k].getID()<<"  "<<d.year[i].company[j].Final.student[k].sName<<endl;
-            }
-            
-        }
     }
-    
     return num;
 }
 
@@ -743,7 +723,7 @@ int students_in_comp_year(DataBase d, int y, string company_name)
     }
     else
     {
-        cout<<"The company did not visit the campus for placement that year"<<endl;
+        cout << "The company did not visit the campus for placement that year" << endl;
         return 0;
     }
 }
@@ -751,8 +731,8 @@ int students_in_comp_year(DataBase d, int y, string company_name)
 int students_in_comp_branch_yearly(DataBase d, int y, string company_name, int branch_code)
 {
     if (d.hashRtYear(y)->accessHashCompName(company_name) == NULL)
-    {   
-        cout<<"The company did not visit the campus for placement that year"<<endl;
+    {
+        cout << "The company did not visit the campus for placement that year" << endl;
         return 0;
     }
     int result;
@@ -799,28 +779,28 @@ void students_in_comp_program_yearly(DataBase d, int y, string company_name)
 {
     if (d.hashRtYear(y)->accessHashCompName(company_name) == NULL)
     {
-        cout<<"The company did not visit the campus for placement that year"<<endl;
+        cout << "The company did not visit the campus for placement that year" << endl;
     }
-    else{
-    int Btech_result,Mtech_result,Msc_result,Mdes_result;
-    Btech_result = d.hashRtYear(y)->accessHashCompName(company_name)->BIct.size()+d.hashRtYear(y)->accessHashCompName(company_name)->BIctCs.size()+ d.hashRtYear(y)->accessHashCompName(company_name)->BMnc.size()+d.hashRtYear(y)->accessHashCompName(company_name)->BEvd.size();
-    Mtech_result=d.hashRtYear(y)->accessHashCompName(company_name)->MIct.size();
-    Msc_result=d.hashRtYear(y)->accessHashCompName(company_name)->MScIt.size()+d.hashRtYear(y)->accessHashCompName(company_name)->MScDS.size();
-    Mdes_result=d.hashRtYear(y)->accessHashCompName(company_name)->MDes.size();
-    cout<<"Number of students place in "<<company_name<<"for Btech Program: "<<Btech_result<<endl;
-    cout<<"Number of students place in "<<company_name<<"for Mtech Program: "<<Mtech_result<<endl;
-    cout<<"Number of students place in "<<company_name<<"for MSc Program: "<<Msc_result<<endl;
-    cout<<"Number of students place in "<<company_name<<"for Mdes Program: "<<Mdes_result<<endl;
+    else
+    {
+        int Btech_result, Mtech_result, Msc_result, Mdes_result;
+        Btech_result = d.hashRtYear(y)->accessHashCompName(company_name)->BIct.size() + d.hashRtYear(y)->accessHashCompName(company_name)->BIctCs.size() + d.hashRtYear(y)->accessHashCompName(company_name)->BMnc.size() + d.hashRtYear(y)->accessHashCompName(company_name)->BEvd.size();
+        Mtech_result = d.hashRtYear(y)->accessHashCompName(company_name)->MIct.size();
+        Msc_result = d.hashRtYear(y)->accessHashCompName(company_name)->MScIt.size() + d.hashRtYear(y)->accessHashCompName(company_name)->MScDS.size();
+        Mdes_result = d.hashRtYear(y)->accessHashCompName(company_name)->MDes.size();
+        cout << "Number of students place in " << company_name << "for Btech Program: " << Btech_result << endl;
+        cout << "Number of students place in " << company_name << "for Mtech Program: " << Mtech_result << endl;
+        cout << "Number of students place in " << company_name << "for MSc Program: " << Msc_result << endl;
+        cout << "Number of students place in " << company_name << "for Mdes Program: " << Mdes_result << endl;
     }
 }
 
-
 void display(vector<Student *> v)
 {
-    cout<<"Listing the Students "<<endl;
+    cout << "Listing the Students " << endl;
     for (int i = 0; i < v.size(); i++)
     {
-        cout <<i+1<<") "<< v[i]->sName << endl;
+        cout << i + 1 << ") " << v[i]->sName << endl;
     }
 }
 
@@ -834,10 +814,12 @@ void infile(vector<Student *> v, ofstream &f)
 }
 
 int students_branch_yearly(DataBase d, int y, int branch_code)
-{   int result=0;
+{
+    int result = 0;
     switch (branch_code)
     {
-    case (1):{
+    case (1):
+    {
         ofstream fp;
         fp.open("students_BTech_ICT_yearly.csv");
         fp << "Listing B.Tech ICT Students who are placed in year " << y << ",,,," << endl;
@@ -851,7 +833,8 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
         fp.close();
         break;
     }
-    case (0144):{
+    case (0144):
+    {
         ofstream fp;
         fp.open("students_BTech_ICT-CS_yearly.csv");
         fp << "Listing B.Tech ICT-CS Students who are placed in year " << y << ",,,," << endl;
@@ -865,7 +848,8 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
         fp.close();
         break;
     }
-    case (03):{
+    case (03):
+    {
         ofstream fp;
         fp.open("students_BTech_MNC_yearly.csv");
         fp << "Listing B.Tech MNC Students who are placed in year " << y << ",,,," << endl;
@@ -879,8 +863,9 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
         fp.close();
         break;
     }
-        
-    case (04):{
+
+    case (04):
+    {
         ofstream fp;
         fp.open("students_BTech_EVD_yearly.csv");
         fp << "Listing B.Tech EVD Students who are placed in year " << y << ",,,," << endl;
@@ -894,8 +879,9 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
         fp.close();
         break;
     }
-    case (11):{
-         ofstream fp;
+    case (11):
+    {
+        ofstream fp;
         fp.open("students_MTech_ICT_yearly.csv");
         fp << "Listing M.Tech ICT Students who are placed in year " << y << ",,,," << endl;
         fp << "ID, Name, Date, Contact No., Email ID " << endl;
@@ -908,8 +894,9 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
         fp.close();
         break;
     }
-    case (12):{
-         ofstream fp;
+    case (12):
+    {
+        ofstream fp;
         fp.open("students_MSC_IT_yearly.csv");
         fp << "Listing MSc IT Students who are placed in year " << y << ",,,," << endl;
         fp << "ID, Name, Date, Contact No., Email ID " << endl;
@@ -922,8 +909,9 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
         fp.close();
         break;
     }
-    case (14):{
-         ofstream fp;
+    case (14):
+    {
+        ofstream fp;
         fp.open("students_MDes_yearly.csv");
         fp << "Listing MDes Students who are placed in year " << y << ",,,," << endl;
         fp << "ID, Name, Date, Contact No., Email ID " << endl;
@@ -936,8 +924,9 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
         fp.close();
         break;
     }
-    case (18):{
-         ofstream fp;
+    case (18):
+    {
+        ofstream fp;
         fp.open("students_MScDs_yearly.csv");
         fp << "Listing MSc DS Students who are placed in year " << y << ",,,," << endl;
         fp << "ID, Name, Date, Contact No., Email ID " << endl;
