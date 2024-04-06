@@ -124,6 +124,8 @@ public:
 
     friend int students_in_comp_branch_yearly(DataBase d, int y, string company_name, int branch_code);
     friend void student_company_application(DataBase s, int year, string company);
+    friend void studet_year_company_passpercentage(DataBase d,int year, string company);
+
 };
 
 class Company
@@ -192,11 +194,11 @@ public:
     friend int students_in_company(DataBase d, string company_name);
     friend void Student_Complete_Information(string ID, DataBase D);
     friend void students_in_comp_program_yearly(DataBase d, int y, string company_name);
-
-
-
+    friend void student_allcompany_applied(DataBase s, string sID);
     friend int students_branch_yearly(DataBase d, int y, int branch_code);
     friend void student_company_application(DataBase s, int year, string company);
+    friend void studet_year_company_passpercentage(DataBase d,int year, string company);
+
 };
 
 class Year
@@ -300,6 +302,9 @@ public:
         return NULL;
     }
     friend int students_branch_yearly(DataBase d, int y, int branch_code);
+    friend void studet_year_company_passpercentage(DataBase d,int year, string company);
+
+    
 };
 
 class DataBase
@@ -667,6 +672,7 @@ int students_in_comp_branch_yearly(DataBase d, int y, string company_name, int b
 void display(vector<Student *> v);
 int students_branch_yearly(DataBase d, int y, int branch_code);
 void students_in_comp_program_yearly(DataBase d, int y, string company_name);
+void studet_year_company_passpercentage(DataBase d,int year, string company);
 
 int main()
 {
@@ -709,20 +715,25 @@ int main()
     // cout<< students_branch_yearly(database,2019,branch_code);
 
     
-    // cout<<"Enter company and year to get number of students who applied to a specific company"<<endl;\
+    // cout<<"Enter company and year to get number of students who applied to a specific company"<<endl;
     // cin>>year;
     // cin>>company;
-    //student_company_application(database, year, company);
-    int year2;
-    string company2;
-    cout<<"Enter the name of the company and year to get the number of studets who are placed according to the program"<<endl;
-    cin>>year2;
-    cin>>company2;
-    students_in_comp_program_yearly(database, year2, company2);
+    // student_company_application(database, year, company);
+    // int year2;
+    // string company2;
+    // cout<<"Enter the name of the company and year to get the number of studets who are placed according to the program"<<endl;
+    // cin>>year2;
+    // cin>>company2;
+    // students_in_comp_program_yearly(database, year2, company2);
+    cout<<"Enter year and company name to get the pass percentage"<<endl;
+    int year3;
+    string company3;
+    cin>>year3;
+    cin>>company3;
+    studet_year_company_passpercentage(database, year3,company3);
     return 0;
-
-    
 }
+
 void student_company_application(DataBase s, int year, string company)
 {
    if(s.hashRtYear(year)->accessHashCompName(company)==NULL)
@@ -751,7 +762,44 @@ int students_in_company(DataBase d, string company_name)
     }
     return num;
 }
-
+void studet_year_company_passpercentage(DataBase d,int year, string company)
+{
+    cout<<"Press 1 to get total percentage of students placed"<<endl;
+    cout<<"Press 2 to get pass percetage of students from round to another round"<<endl;
+    int choice;
+    cin>>choice;
+    float percentage;
+    switch (choice)
+    {
+    case 1:
+    {
+        int numR1=d.hashRtYear(year)->accessHashCompName(company)->R1.numS;
+        int numR5=d.hashRtYear(year)->accessHashCompName(company)->Final.numS;
+        percentage=(numR5)*100.0/numR1;
+        cout<<fixed << setprecision(2)<<percentage << "%" "students were placed"<<endl;
+        break;
+    }
+    case 2:
+    {
+        int numRInitial;
+        int numRAnother;
+        cout<<"Enter initial round number"<<endl;
+        cout<<"Enter another round number"<<endl;
+        cin>> numRInitial;
+        cin>> numRAnother;
+        int numRIni=d.hashRtYear(year)->accessHashCompName(company)->rptr[numRInitial-1]->numS;
+        int numRAno=d.hashRtYear(year)->accessHashCompName(company)->rptr[numRAnother-1]->numS;
+        percentage=(numRAno)*100.0/numRIni;
+        cout<< fixed << setprecision(2)<<percentage << " %" " students were placed from Round"<<numRInitial<<" to Round "<<numRAnother<<endl;
+        break;
+    }
+    default:
+    {
+        cout<<"You have entered invalid case"<<endl;
+        break;
+    }
+    }
+}
 int students_in_comp_year(DataBase d, int y, string company_name)
 { // Number of students placed in a particular company in a given year
     if (d.hashRtYear(y)->accessHashCompName(company_name) != NULL)
