@@ -5,8 +5,6 @@ class DataBase;
 
 int random_salary_genrator()
 {
-    srand(time(NULL));
-
     int num = rand() % 90;
 
     if (num >= 5)
@@ -118,7 +116,6 @@ public:
 
     friend int students_in_company(DataBase d, string company_name);
     friend int students_in_comp_year(DataBase d, int y, string company_name);
-    friend int students_in_comp_branch_yearly(DataBase d, int y, string company_name, string branch);
     friend int students_in_company(DataBase d, string company_name);
     friend void Student_Complete_Information(string ID, DataBase D);
 
@@ -194,6 +191,8 @@ public:
 
     friend int students_branch_yearly(DataBase d, int y, int branch_code);
     friend void student_company_application(DataBase s, int year, string company);
+    friend int average_salary_year_branch(DataBase *d, int y, int b_code);
+    friend int highest_salary_year_branch(DataBase *d, int y, int b_code);
 };
 
 class Year
@@ -203,15 +202,17 @@ private:
     int No_of_Comp;
     Company *company;
 
-    int highest_package, lowest_package;
+    int highest_package, lowest_package, average_package;
 
     vector<vector<Student *> *> Ybict;
 
 public:
-    Year() : highest_package(0), lowest_package(9000000) {}
+    Year() : highest_package(0), lowest_package(9000000), average_package(0) {}
 
-    friend int highest_salery_year(DataBase *d, int y);
-    friend int lowest_salery_year(DataBase *d, int y);
+    friend int highest_salary_year(DataBase *d, int y);
+    friend int lowest_salary_year(DataBase *d, int y);
+    friend int average_salary_year(DataBase *d, int y);
+
     void allocateCompMemory(int noC)
     {
         company = new Company[noC];
@@ -222,10 +223,7 @@ public:
             Ybict.push_back(&company[i].BIct);
         }
     }
-    Company *comptr()
-    {
-        return this->company;
-    }
+    
     void setYear(int c, int r, int i, string n);
     friend void set_data(string year_file, DataBase *);
     friend int students_in_company(DataBase d, string company_name);
@@ -260,6 +258,8 @@ public:
         }
     }
     friend void Student_Complete_Information(string ID, DataBase D);
+    friend int average_salary_year_branch(DataBase *d, int y, int b_code);
+    friend int highest_salary_year_branch(DataBase *d, int y, int b_code);
 
     Company *accessHashCompName(string company_name)
     {
@@ -340,14 +340,95 @@ public:
     friend void Student_Complete_Information(string ID, DataBase D);
 };
 
-int highest_salery_year(DataBase *d, int y)
+int highest_salary_year(DataBase *d, int y)
 {
     return d->hashRtYear(y)->highest_package;
 }
 
-int lowest_salery_year(DataBase *d, int y)
+int lowest_salary_year(DataBase *d, int y)
 {
     return d->hashRtYear(y)->lowest_package;
+}
+
+int average_salary_year(DataBase *d, int y)
+{
+    return d->hashRtYear(y)->average_package;
+}
+
+int average_salary_year_branch(DataBase *d, int y, int b_code)
+{
+    int sum=0;
+    int no_st=0;
+
+    switch (b_code)
+    {
+    case (01):
+        for(int i=0 ; i<d->hashRtYear(y)->No_of_Comp ; i++)
+        {
+            Company *cptr = &d->hashRtYear(y)->company[i];
+            sum = sum + (cptr->salery * cptr->BIct.size());
+            no_st = no_st + cptr->BIct.size();
+        }
+        break;
+    case (0144):
+        for(int i=0 ; i<d->hashRtYear(y)->No_of_Comp ; i++)
+        {
+            Company *cptr = &d->hashRtYear(y)->company[i];
+            sum = sum + (cptr->salery * cptr->BIctCs.size());
+            no_st = no_st + cptr->BIctCs.size();
+        }
+        break;
+    case (03):
+        for(int i=0 ; i<d->hashRtYear(y)->No_of_Comp ; i++)
+        {
+            Company *cptr = &d->hashRtYear(y)->company[i];
+            sum = sum + (cptr->salery * cptr->BMnc.size());
+            no_st = no_st + cptr->BMnc.size();
+        }
+        break;
+    case (04):
+        for(int i=0 ; i<d->hashRtYear(y)->No_of_Comp ; i++)
+        {
+            Company *cptr = &d->hashRtYear(y)->company[i];
+            sum = sum + (cptr->salery * cptr->BEvd.size());
+            no_st = no_st + cptr->BEvd.size();
+        }
+        break;
+    case (11):
+       for(int i=0 ; i<d->hashRtYear(y)->No_of_Comp ; i++)
+        {
+            Company *cptr = &d->hashRtYear(y)->company[i];
+            sum = sum + (cptr->salery * cptr->MIct.size());
+            no_st = no_st + cptr->MIct.size();
+        }
+        break;
+    case (12):
+        for(int i=0 ; i<d->hashRtYear(y)->No_of_Comp ; i++)
+        {
+            Company *cptr = &d->hashRtYear(y)->company[i];
+            sum = sum + (cptr->salery * cptr->MScIt.size());
+            no_st = no_st + cptr->MScIt.size();
+        }
+        break;
+    case (14):
+       for(int i=0 ; i<d->hashRtYear(y)->No_of_Comp ; i++)
+        {
+            Company *cptr = &d->hashRtYear(y)->company[i];
+            sum = sum + (cptr->salery * cptr->MDes.size());
+            no_st = no_st + cptr->MDes.size();
+        }
+        break;
+    case (18):
+      for(int i=0 ; i<d->hashRtYear(y)->No_of_Comp ; i++)
+        {
+            Company *cptr = &d->hashRtYear(y)->company[i];
+            sum = sum + (cptr->salery * cptr->MScDS.size());
+            no_st = no_st + cptr->MScDS.size();
+        }
+        break;
+    }
+    
+    return sum/no_st;
 }
 
 void startdata(ifstream *f)
@@ -374,8 +455,6 @@ int count(ifstream *f)
     return c;
 }
 
-// int MDes=0,MIct=0,MScIt=0, MScDS=0,BIct=0, BIctCs=0, BMnc=0, BEvd=0;//globally declared
-
 void set_data(string year_file, DataBase *All_std_data)
 {
 
@@ -395,6 +474,8 @@ void set_data(string year_file, DataBase *All_std_data)
 
         string yearF;
         getline(my_yr_file, yearF, '\n');
+
+        int t_std=0;
 
         int int_year = 0; // string year to int year
         for (int j = 0; j < 4; j++)
@@ -433,7 +514,7 @@ void set_data(string year_file, DataBase *All_std_data)
             {
                 yptr->highest_package = sal;
             }
-            else if (sal < yptr->lowest_package)
+            if (sal < yptr->lowest_package)
             {
                 yptr->lowest_package = sal;
             }
@@ -467,8 +548,6 @@ void set_data(string year_file, DataBase *All_std_data)
             getline(comp_round_file, tempwhats1, ',');
             getline(comp_round_file, tempalt1, ',');
             getline(comp_round_file, tempskype1, '\n');
-
-            // separate_branchwise(tempid);
 
             for (int j = 0; j < 9; j++) // string std_id to int std_id
             {
@@ -557,7 +636,9 @@ void set_data(string year_file, DataBase *All_std_data)
                 if (i == 4)
                 {
                     cptr->separate_branchwise(tempid1, sptr1);
-                    // cout<<sptr1->getID()<<endl;
+
+                    t_std = t_std + No_std;
+                    yptr->average_package = yptr->average_package + (sal*No_std);
                 }
 
                 while (comp_round_file.peek() != EOF)
@@ -593,30 +674,33 @@ void set_data(string year_file, DataBase *All_std_data)
                         // cout<<sptr->getID()<<endl;
                     }
                 }
-                // cout<< All_std_data->hashRtYear(int_year)->accessHashCompName(comp_name)->rptr[i]->student[0].sName << endl;
-                // cout << "hello"<<endl;
+                
                 comp_round_file.close();
             }
         }
 
         my_comp_file.close();
+
+        yptr->average_package = yptr->average_package/t_std;
+
     }
     my_yr_file.close();
 }
+
 void Student_Complete_Information(string ID, DataBase D)
 {
     int id = 0, b = 0;
     
     for (int i = 0; i < 9; i++){
-        id = id + ((int)ID.at(i) - 48) * pow(10, 8 - i);
+        id = id + (ID[i] - 48) * pow(10, 8 - i);
     }
     int year = 0;
     for (int i = 0; i < 4; i++){
-        year = year + ((int)(ID[i]) - 48) * (pow(10, 3 - i));
+        year = year + ((ID[i]) - 48) * (pow(10, 3 - i));
     }
     for (int i = 4; i < 6; i++)
     {
-        b = b + ((int)ID[i] - 48) * (pow(10, 5 - i));
+        b = b + (ID[i] - 48) * (pow(10, 5 - i));
     }
     if(ID[4]==0){           
         year+=4;
@@ -669,8 +753,12 @@ int main()
     DataBase database;
 
     set_data("Year.txt", &database);
-    int year;
-    string company;
+
+    cout << average_salary_year_branch(&database, 2019, 01) << endl;
+    cout << average_salary_year_branch(&database, 2019, 0144) << endl;
+    cout << average_salary_year_branch(&database, 2019, 03) << endl;
+    // int year;
+    // string company;
     // int x;
     // x=students_in_comp_year(database,2019,"Google");
     // cout<<x;
@@ -689,27 +777,28 @@ int main()
     //     }
     // cout<<int_year<<endl;
     // database
-    int branch_code;
-    int Prog;
-    cout << "Enter 0 for B.Tech and 1 for M.Tech" << endl;
-    cin >> Prog;
-    cout << "Enter Branchcode for respective branches: " << endl
-         << "Enter " << endl
-         << "01 for B.Tech ICT" << endl
-         << "0144 for B.Tech ICT-CS" << endl
-         << "03 for B.Tech MNC" << endl
-         << "04 for B.Tech EVD" << endl
-         << "11 for M.Tech ICT" << endl;
-    cin >> branch_code;
-    cout << students_in_comp_branch_yearly(database, 2019, "Google", branch_code) << endl;
-    cout << students_branch_yearly(database, 2019, branch_code);
+    // int branch_code;
+    // int Prog;
+    // cout << "Enter 0 for B.Tech and 1 for M.Tech" << endl;
+    // cin >> Prog;
+    // cout << "Enter Branchcode for respective branches: " << endl
+    //      << "Enter " << endl
+    //      << "01 for B.Tech ICT" << endl
+    //      << "0144 for B.Tech ICT-CS" << endl
+    //      << "03 for B.Tech MNC" << endl
+    //      << "04 for B.Tech EVD" << endl
+    //      << "11 for M.Tech ICT" << endl;
+    // cin >> branch_code;
+    // cout << students_in_comp_branch_yearly(database, 2019, "Google", branch_code) << endl;
+    // cout << students_branch_yearly(database, 2019, branch_code);
 
-    return 0;
-    cout<<"Enter company and year to get number of students who applied to a specific company"<<endl;\
-    cin>>year;
-    cin>>company;
-    student_company_application(database, year, company);
+    // return 0;
+    // cout<<"Enter company and year to get number of students who applied to a specific company"<<endl;\
+    // cin>>year;
+    // cin>>company;
+    // student_company_application(database, year, company);
 
+    
     
 }
 void student_company_application(DataBase s, int year, string company)
