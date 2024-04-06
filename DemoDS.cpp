@@ -241,7 +241,7 @@ public:
             h = (comp_code % No_of_Comp + i) % No_of_Comp; // double hashing
             if (company[h].cName.empty())
             {
-                company[h].cName = comp_name;
+                company[h].cName = comp_name.erase(comp_name.length()-12,12);
                 return &company[h];
             }
             else
@@ -617,7 +617,7 @@ void Student_Complete_Information(int ID, DataBase D)
         }
         if (counter > 0)
         {
-            cout << "The student appeared for Company " << D.hashRtYear(year)->company[i].cName << endl;
+            cout << "The student appeared for Company "<<D.hashRtYear(year)->company[i].cName << endl;
             cout << "He cleared till Round " << counter << endl;
         }
         // D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)==;
@@ -666,8 +666,8 @@ int main()
     //      << "18 for MSc DS" << endl;
     // cin >> branch_code;
     // cout << students_in_comp_branch_yearly(database, 2019, "Google", branch_code) << endl;
-    // cout << students_branch_yearly(database, 2019, branch_code);
-
+    cout << students_branch_yearly(database, 2019, 01);
+    
     // cout<<"Enter company and year to get number of students who applied to a specific company"<<endl;\
     // cin>>year;
     // cin>>company;
@@ -677,7 +677,7 @@ int main()
     // cout<<"Enter the name of the company and year to get the number of studets who are placed according to the program"<<endl;
     // cin>>year2;
     // cin>>company2;
-    Student_Complete_Information(201601044, database);
+    Student_Complete_Information(201601123, database);
     // students_in_comp_program_yearly(database, year2, company2);
     // cout<< students_in_company(database,"Sprinkler");
     // cout<<students_in_comp_year(database,2020,"Bell");
