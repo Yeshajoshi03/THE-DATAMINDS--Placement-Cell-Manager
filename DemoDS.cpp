@@ -616,7 +616,7 @@ void Student_Complete_Information(int ID, DataBase D)
                     cout << "The email ID of student is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->email << endl;
                     cout << "The Whatsapp no. of stdudent is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->Whatsapp_no << endl;
                     cout << "The skype ID of student is: " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->skypeID << endl;
-                    cout << "The program of student enrolled is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->program << endl;
+                    cout << "The program of student enrolled is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->program << endl<<endl;
                 }
             }
         }
@@ -646,47 +646,11 @@ int main()
     int year;
     string company;
 
-    // string st="2019";
-    // int int_year=0;//string year to int year
-    //     for(int j=0; j<4; j++){//first 4 chars from filename
-    //         int temp;
-    //         temp=(st[j]-'0')* pow(10,3-j);
-    //         int_year= int_year+temp;
-    //     }
-    // cout<<int_year<<endl;
-    // database
-    // int branch_code;
-    // int Prog;
-    // cout << "Enter 0 for B.Tech and 1 for M.Tech" << endl;
-    // cin >> Prog;
-    // cout << "Enter Branchcode for respective branches: " << endl
-    //      << "Enter " << endl
-    //      << "01 for B.Tech ICT" << endl
-    //      << "0144 for B.Tech ICT-CS" << endl
-    //      << "03 for B.Tech MNC" << endl
-    //      << "04 for B.Tech EVD" << endl
-    //      << "11 for M.Tech ICT" << endl
-    //      << "12 for MSc IT" << endl
-    //      << "14 for MDes" << endl
-    //      << "18 for MSc DS" << endl;
-    // cin >> branch_code;
-    // cout << students_in_comp_branch_yearly(database, 2019, "Google", branch_code) << endl;
-    // cout << students_branch_yearly(database, 2019, branch_code);
-
-    // cout<<"Enter company and year to get number of students who applied to a specific company"<<endl;\
-    // cin>>year;
-    // cin>>company;
-    // student_company_application(database, year, company);
-    // int year2;
-    // string company2;
-    // cout<<"Enter the name of the company and year to get the number of studets who are placed according to the program"<<endl;
-    // cin>>year2;
-    // cin>>company2;
-    Student_Complete_Information(201601044, database);
-    // students_in_comp_program_yearly(database, year2, company2);
-    // cout<< students_in_company(database,"Sprinkler");
-    // cout<<students_in_comp_year(database,2020,"Bell");
-    // cout<<students_branch_yearly(database,2020,01);
+   
+    int temp;
+    cout <<"Enter : "<<endl;
+    cin >>temp;
+    Student_Complete_Information(temp, database);
     return 0;
 }
 
