@@ -890,6 +890,7 @@ int highest_salary_year_branch(DataBase *d, int y, int b_code)
         }
         break;
     }
+    return highest;
 }
 void company_year(DataBase d, string company)
 {
