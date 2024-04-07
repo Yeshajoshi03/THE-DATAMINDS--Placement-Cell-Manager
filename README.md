@@ -10,6 +10,7 @@ Yesha Joshi: 202301462
             int students_in_comp_branch_yearly(DataBase d, int y, string company_name, int branch_code);
             int students_branch_yearly(DataBase d, int y, int branch_code);
             Error handling
+            report making
 Rujal Jiyani: 202301277
             DataStructure thinking and making
             int main
@@ -19,6 +20,7 @@ Rujal Jiyani: 202301277
             int average_salary_year_branch(DataBase *d, int y, int b_code)
             Hash functions
             Error handling
+            report making
 Shubham Varmora: 202301450
             Data structure thinking
             int highest_salary_year_branch(DataBase *d, int y, int b_code)
@@ -27,6 +29,7 @@ Shubham Varmora: 202301450
             void student_year_company_passpercentage(DataBase d,int year, string company)
             void student__round_removedhighest(DataBase s, int year, string company)
             Error handling
+            report making
 Maharshi Patel: 202301486
               Data structure thinking
               int main
@@ -34,5 +37,7 @@ Maharshi Patel: 202301486
               CSV files
               Error handling
               ReadMe
+              video making
+              report making
               
               
