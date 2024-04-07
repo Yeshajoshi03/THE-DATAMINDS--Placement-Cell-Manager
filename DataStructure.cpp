@@ -207,8 +207,6 @@ private:
 
     int highest_package, lowest_package, average_package;
 
-    vector<vector<Student *> *> Ybict;
-
 public:
     Year() : highest_package(0), lowest_package(9000000), average_package(0) {}
 
@@ -220,11 +218,6 @@ public:
     {
         company = new Company[noC];
         No_of_Comp = noC;
-
-        for (int i = 0; i < noC; i++)
-        {
-            Ybict.push_back(&company[i].BIct);
-        }
     }
 
 
