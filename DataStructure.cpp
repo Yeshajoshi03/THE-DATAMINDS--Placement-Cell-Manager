@@ -767,20 +767,20 @@ void studet_year_company_passpercentage(DataBase d,int year, string company);
 //     //     }
 //     // cout<<int_year<<endl;
 //     // database
-//     // // int branch_code;
+    int branch_code;
 //     // // int Prog;
-//     // // cout << "Enter 0 for B.Tech and 1 for M.Tech" << endl;
-//     // // cin >> Prog;
-//     // // cout << "Enter Branchcode for respective branches: " << endl
-//     // //      << "Enter " << endl
-//     // //      << "01 for B.Tech ICT" << endl
-//     // //      << "0144 for B.Tech ICT-CS" << endl
-//     // //      << "03 for B.Tech MNC" << endl
-//     // //      << "04 for B.Tech EVD" << endl
-//     // //      << "11 for M.Tech ICT" << endl
-//     //      << "12 for MSc IT" << endl
-//     //      << "14 for MDes" << endl
-//     //      << "18 for MSc DS" << endl;
+    // cout << "Enter 0 for B.Tech and 1 for M.Tech" << endl;
+    // cin >> Prog;
+    // cout << "Enter Branchcode for respective branches: " << endl
+    //      << "Enter " << endl
+    //      << "01 for B.Tech ICT" << endl
+    //      << "0144 for B.Tech ICT-CS" << endl
+    //      << "03 for B.Tech MNC" << endl
+    //      << "04 for B.Tech EVD" << endl
+    //      << "11 for M.Tech ICT" << endl
+    //      << "12 for MSc IT" << endl
+    //      << "14 for MDes" << endl
+    //      << "18 for MSc DS" << endl;
 //     // // cin >> branch_code;
 //     // // cout << students_in_comp_branch_yearly(database, 2019, "Google", branch_code) << endl;
 //     // // cout << students_branch_yearly(database, 2019, branch_code);
@@ -981,7 +981,7 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
     case (1):
     {
         ofstream fp;
-        fp.open("students_BTech_ICT_yearly.csv");
+        fp.open("Students_BTech_ICT_yearly.csv");
         fp << "Listing B.Tech ICT Students who are placed in year " << y << ",,,," << endl;
         fp << "ID, Name, Date, Contact No., Email ID " << endl;
 
@@ -991,12 +991,13 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
             infile(d.hashRtYear(y)->company[i].BIct, fp);
         }
         fp.close();
+        cout<<"Open Students_BTech_ICT_yearly.csv to get data of all required students."<<endl;
         break;
     }
     case (0144):
     {
         ofstream fp;
-        fp.open("students_BTech_ICT-CS_yearly.csv");
+        fp.open("Sudents_BTech_ICT-CS_yearly.csv");
         fp << "Listing B.Tech ICT-CS Students who are placed in year " << y << ",,,," << endl;
         fp << "ID, Name, Date, Contact No., Email ID " << endl;
 
@@ -1006,12 +1007,13 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
             infile(d.hashRtYear(y)->company[i].BIctCs, fp);
         }
         fp.close();
+        cout<<"Open Students_BTech_ICT-CS_yearly.csv to get data of all required students."<<endl;
         break;
     }
     case (03):
     {
         ofstream fp;
-        fp.open("students_BTech_MNC_yearly.csv");
+        fp.open("Students_BTech_MNC_yearly.csv");
         fp << "Listing B.Tech MNC Students who are placed in year " << y << ",,,," << endl;
         fp << "ID, Name, Date, Contact No., Email ID " << endl;
 
@@ -1021,13 +1023,14 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
             infile(d.hashRtYear(y)->company[i].BMnc, fp);
         }
         fp.close();
+        cout<<"Open Students_BTech_MNC_yearly.csv to get data of all required students."<<endl;
         break;
     }
 
     case (04):
     {
         ofstream fp;
-        fp.open("students_BTech_EVD_yearly.csv");
+        fp.open("Students_BTech_EVD_yearly.csv");
         fp << "Listing B.Tech EVD Students who are placed in year " << y << ",,,," << endl;
         fp << "ID, Name, Date, Contact No., Email ID " << endl;
 
@@ -1037,12 +1040,13 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
             infile(d.hashRtYear(y)->company[i].BEvd, fp);
         }
         fp.close();
+        cout<<"Open Students_BTech_EVD_yearly.csv to get data of all required students."<<endl;
         break;
     }
     case (11):
     {
         ofstream fp;
-        fp.open("students_MTech_ICT_yearly.csv");
+        fp.open("Students_MTech_ICT_yearly.csv");
         fp << "Listing M.Tech ICT Students who are placed in year " << y << ",,,," << endl;
         fp << "ID, Name, Date, Contact No., Email ID " << endl;
 
@@ -1052,12 +1056,13 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
             infile(d.hashRtYear(y)->company[i].MIct, fp);
         }
         fp.close();
+        cout<<"Open Students_MTech_ICT_yearly.csv to get data of all required students."<<endl;
         break;
     }
     case (12):
     {
         ofstream fp;
-        fp.open("students_MSC_IT_yearly.csv");
+        fp.open("Students_MSC_IT_yearly.csv");
         fp << "Listing MSc IT Students who are placed in year " << y << ",,,," << endl;
         fp << "ID, Name, Date, Contact No., Email ID " << endl;
 
@@ -1067,12 +1072,13 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
             infile(d.hashRtYear(y)->company[i].MScIt, fp);
         }
         fp.close();
+        cout<<"Open Students_MSC_IT_yearly.csv to get data of all required students."<<endl;
         break;
     }
     case (14):
     {
         ofstream fp;
-        fp.open("students_MDes_yearly.csv");
+        fp.open("Students_MDes_yearly.csv");
         fp << "Listing MDes Students who are placed in year " << y << ",,,," << endl;
         fp << "ID, Name, Date, Contact No., Email ID " << endl;
 
@@ -1082,12 +1088,13 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
             infile(d.hashRtYear(y)->company[i].MDes, fp);
         }
         fp.close();
+        cout<<"Open Students_MDes_yearly.csv to get data of all required students."<<endl;
         break;
     }
     case (18):
     {
         ofstream fp;
-        fp.open("students_MScDs_yearly.csv");
+        fp.open("Students_MScDs_yearly.csv");
         fp << "Listing MSc DS Students who are placed in year " << y << ",,,," << endl;
         fp << "ID, Name, Date, Contact No., Email ID " << endl;
 
@@ -1097,8 +1104,12 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
             infile(d.hashRtYear(y)->company[i].MScDS, fp);
         }
         fp.close();
+        cout<<"Open Students_MScDs_yearly.csv to get data of all required students."<<endl;
         break;
     }
+    default:
+        cout<<"Enter valid branchcode."<<endl;
+        break;
     }
 
     return result;
