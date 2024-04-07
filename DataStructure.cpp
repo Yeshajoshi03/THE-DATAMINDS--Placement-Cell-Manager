@@ -101,7 +101,11 @@ public:
         {
             int h;
             h = (ID % numS + i) % numS; // linear probing
-            if (student[h].id == ID)
+            if (student[h].sName.empty())
+            {
+                return NULL;
+            }
+            else if (student[h].id == ID)
             {
                 return &student[h];
                 // break;
@@ -741,11 +745,11 @@ void studet_year_company_passpercentage(DataBase d,int year, string company);
 void student__round_removedhighest(DataBase d,int year,string company);
 
 
-int main()
-{
-    DataBase database;
+// int main()
+// {
+//     DataBase database;
 
-    set_data("Year.txt", &database);
+//     set_data("Year.txt", &database);
 
     // cout << average_salary_year_branch(&database, 2019, 01) << endl;
     // cout << average_salary_year_branch(&database, 2019, 0144) << endl;
@@ -814,12 +818,13 @@ int main()
     // cin>>year4;
     // cin>>company4;
     // student__round_removedhighest(database, year4, company4);
-    cout<<"Enter compnay to see the years in which company visited for campus placement"<<endl;
-    string company5;
-    cin>>company5;
-    company_year(database, company5);
-    return 0;
-}
+    // cout<<"Enter compnay to see the years in which company visited for campus placement"<<endl;
+    // string company5;
+    // cin>>company5;
+    // company_year(database, company5);
+//     return 0;
+// }
+
 int highest_salary_year_branch(DataBase *d, int y, int b_code)
 {
     int highest = 0;
