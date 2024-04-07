@@ -94,17 +94,17 @@ public:
             }
         }
     }
-    Student *accesshashStdId(int id)
+    Student *accesshashStdId(int ID)
     {
-        int i = 0, h=0;
-       while( i < numS)
+        int i = 0;
+        while(i<numS)
         {
-            
-            h = (id + i) % numS; // linear probing
-            if (student[h].id == id)
+            int h;
+            h = (ID % numS + i) % numS; // linear probing
+            if (student[h].id == ID)
             {
                 return &student[h];
-                break;
+                // break;
             }
             else
             {
@@ -116,10 +116,11 @@ public:
 
     friend int students_in_comp_year(DataBase d, int y, string company_name);
     friend int students_in_company(DataBase d, string company_name);
-    friend void Student_Complete_Information(string ID, DataBase D);
+    friend void Student_Complete_Information(int ID, DataBase D);
     friend void student__round_removedhighest(DataBase s, int year, string company);
     friend int students_in_comp_branch_yearly(DataBase d, int y, string company_name, int branch_code);
     friend void student_company_application(DataBase s, int year, string company);
+    friend void studet_year_company_passpercentage(DataBase d, int year, string company);
     friend void student_year_company_passpercentage(DataBase d, int year, string company);
 };
 
@@ -193,6 +194,8 @@ public:
     friend void student_year_company_passpercentage(DataBase d,int year, string company);
     friend void student__round_removedhighest(DataBase s, int year, string company);
 
+    friend void studet_year_company_passpercentage(DataBase d, int year, string company);
+    friend void student__round_removedhighest(DataBase s, int year, string company);
 };
 
 class Year
@@ -223,6 +226,7 @@ public:
             Ybict.push_back(&company[i].BIct);
         }
     }
+
 
     void setYear(int c, int r, int i, string n);
     friend void set_data(string year_file, DataBase *);
@@ -367,6 +371,7 @@ int average_salary_year_branch(DataBase *d, int y, int b_code)
     {
     case (01):
         for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
+        for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
         {
             Company *cptr = &d->hashRtYear(y)->company[i];
             sum = sum + (cptr->salery * cptr->BIct.size());
@@ -374,6 +379,7 @@ int average_salary_year_branch(DataBase *d, int y, int b_code)
         }
         break;
     case (0144):
+        for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
         for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
         {
             Company *cptr = &d->hashRtYear(y)->company[i];
@@ -383,6 +389,7 @@ int average_salary_year_branch(DataBase *d, int y, int b_code)
         break;
     case (03):
         for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
+        for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
         {
             Company *cptr = &d->hashRtYear(y)->company[i];
             sum = sum + (cptr->salery * cptr->BMnc.size());
@@ -390,6 +397,7 @@ int average_salary_year_branch(DataBase *d, int y, int b_code)
         }
         break;
     case (04):
+        for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
         for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
         {
             Company *cptr = &d->hashRtYear(y)->company[i];
@@ -399,6 +407,7 @@ int average_salary_year_branch(DataBase *d, int y, int b_code)
         break;
     case (11):
         for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
+        for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
         {
             Company *cptr = &d->hashRtYear(y)->company[i];
             sum = sum + (cptr->salery * cptr->MIct.size());
@@ -406,6 +415,7 @@ int average_salary_year_branch(DataBase *d, int y, int b_code)
         }
         break;
     case (12):
+        for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
         for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
         {
             Company *cptr = &d->hashRtYear(y)->company[i];
@@ -415,6 +425,7 @@ int average_salary_year_branch(DataBase *d, int y, int b_code)
         break;
     case (14):
         for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
+        for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
         {
             Company *cptr = &d->hashRtYear(y)->company[i];
             sum = sum + (cptr->salery * cptr->MDes.size());
@@ -423,6 +434,7 @@ int average_salary_year_branch(DataBase *d, int y, int b_code)
         break;
     case (18):
         for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
+        for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
         {
             Company *cptr = &d->hashRtYear(y)->company[i];
             sum = sum + (cptr->salery * cptr->MScDS.size());
@@ -430,6 +442,8 @@ int average_salary_year_branch(DataBase *d, int y, int b_code)
         }
         break;
     }
+
+    return sum / no_st;
 
     return sum / no_st;
 }
@@ -478,6 +492,7 @@ void set_data(string year_file, DataBase *All_std_data)
         string yearF;
         getline(my_yr_file, yearF, '\n');
 
+        int t_std = 0;
         int t_std = 0;
 
         int int_year = 0; // string year to int year
@@ -746,63 +761,63 @@ void student__round_removedhighest(DataBase d,int year,string company);
     // cout << database.year[0].yr<<endl;
     // cout << database.year[1].yr<<endl;
 
-    // string st="2019";
-    // int int_year=0;//string year to int year
-    //     for(int j=0; j<4; j++){//first 4 chars from filename
-    //         int temp;
-    //         temp=(st[j]-'0')* pow(10,3-j);
-    //         int_year= int_year+temp;
-    //     }
-    // cout<<int_year<<endl;
-    // database
-    // // int branch_code;
-    // // int Prog;
-    // // cout << "Enter 0 for B.Tech and 1 for M.Tech" << endl;
-    // // cin >> Prog;
-    // // cout << "Enter Branchcode for respective branches: " << endl
-    // //      << "Enter " << endl
-    // //      << "01 for B.Tech ICT" << endl
-    // //      << "0144 for B.Tech ICT-CS" << endl
-    // //      << "03 for B.Tech MNC" << endl
-    // //      << "04 for B.Tech EVD" << endl
-    // //      << "11 for M.Tech ICT" << endl
-    //      << "12 for MSc IT" << endl
-    //      << "14 for MDes" << endl
-    //      << "18 for MSc DS" << endl;
-    // // cin >> branch_code;
-    // // cout << students_in_comp_branch_yearly(database, 2019, "Google", branch_code) << endl;
-    // // cout << students_branch_yearly(database, 2019, branch_code);
+// string st="2019";
+// int int_year=0;//string year to int year
+//     for(int j=0; j<4; j++){//first 4 chars from filename
+//         int temp;
+//         temp=(st[j]-'0')* pow(10,3-j);
+//         int_year= int_year+temp;
+//     }
+// cout<<int_year<<endl;
+// database
+// // int branch_code;
+// // int Prog;
+// // cout << "Enter 0 for B.Tech and 1 for M.Tech" << endl;
+// // cin >> Prog;
+// // cout << "Enter Branchcode for respective branches: " << endl
+// //      << "Enter " << endl
+// //      << "01 for B.Tech ICT" << endl
+// //      << "0144 for B.Tech ICT-CS" << endl
+// //      << "03 for B.Tech MNC" << endl
+// //      << "04 for B.Tech EVD" << endl
+// //      << "11 for M.Tech ICT" << endl
+//      << "12 for MSc IT" << endl
+//      << "14 for MDes" << endl
+//      << "18 for MSc DS" << endl;
+// // cin >> branch_code;
+// // cout << students_in_comp_branch_yearly(database, 2019, "Google", branch_code) << endl;
+// // cout << students_branch_yearly(database, 2019, branch_code);
 
-    // cout<<"Enter company and year to get number of students who applied to a specific company"<<endl;\
+// cout<<"Enter company and year to get number of students who applied to a specific company"<<endl;\
     // cin>>year;
-    // cin>>company;
-    //  student_company_application(database, year, company);
-    // // int year2;
-    // // string company2;
-    // // cout<<"Enter the name of the company and year to get the number of studets who are placed according to the program"<<endl;
-    // // cin>>year2;
-    // // cin>>company2;
-    // Student_Complete_Information(201601044, database);
-    // // students_in_comp_program_yearly(database, year2, company2);
-    // cout<< students_in_company(database,"Sprinkler");
-    // cout<<students_in_comp_year(database,2020,"Bell");
-    // cout<<students_branch_yearly(database,2020,01);
-    // cout<<"Enter year and company name to get the pass percentage"<<endl;
-    // int year3;
-    // string company3;
-    // cin>>year3;
-    // cin>>company3;
-    // student_year_company_passpercentage(database, year3,company3);
-    // cout<<"Enter year and company to get the round in which the highest number of students are removed"<<endl;
-    // int year4;
-    // string company4;
-    // cin>>year4;
-    // cin>>company4;
-    // student__round_removedhighest(database, year4, company4);
-//     cout<<"Enter compnay to see the years in which company visited for campus placement"<<endl;
-//     string company5;
-//     cin>>company5;
-//     company_year(database, company5);
+// cin>>company;
+//  student_company_application(database, year, company);
+// // int year2;
+// // string company2;
+// // cout<<"Enter the name of the company and year to get the number of studets who are placed according to the program"<<endl;
+// // cin>>year2;
+// // cin>>company2;
+// Student_Complete_Information(201601044, database);
+// // students_in_comp_program_yearly(database, year2, company2);
+// cout<< students_in_company(database,"Sprinkler");
+// cout<<students_in_comp_year(database,2020,"Bell");
+// cout<<students_branch_yearly(database,2020,01);
+// cout<<"Enter year and company name to get the pass percentage"<<endl;
+// int year3;
+// string company3;
+// cin>>year3;
+// cin>>company3;
+// studet_year_company_passpercentage(database, year3,company3);
+// cout<<"Enter year and company to get the round in which the highest number of students are removed"<<endl;
+// int year4;
+// string company4;
+// cin>>year4;
+// cin>>company4;
+// student__round_removedhighest(database, year4, company4);
+// cout<<"Enter compnay to see the years in which company visited for campus placement"<<endl;
+// string company5;
+// cin>>company5;
+// company_year(database, company5);
 //     return 0;
 // }
 int highest_salary_year_branch(DataBase *d, int y, int b_code)
@@ -968,6 +983,8 @@ void student_year_company_passpercentage(DataBase d,int year, string company)
 {
     cout << "Press 1 to get total percentage of students placed" << endl;
     cout << "Press 2 to get pass percetage of students from round to another round" << endl;
+    cout << "Press 1 to get total percentage of students placed" << endl;
+    cout << "Press 2 to get pass percetage of students from round to another round" << endl;
     int choice;
     cin >> choice;
     float percentage;
@@ -1000,6 +1017,7 @@ void student_year_company_passpercentage(DataBase d,int year, string company)
     }
     default:
     {
+        cout << "You have entered invalid case" << endl;
         cout << "You have entered invalid case" << endl;
         break;
     }
