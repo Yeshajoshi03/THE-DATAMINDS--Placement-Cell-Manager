@@ -27,14 +27,14 @@ label:
     int branchCode;
     switch (num)
     {
-
-    case 1://student centric
+    case 1:
     {
-
     label1:
-        cout << "Press 1 to get the complete details of student" << endl
-             << "Press 2 to get the students placed in companies branchwise in a year." << endl
-             << "Press 0 to go back to main menu." << endl;
+        cout << "Press 1 for complete details of student" << endl
+             << "Press 2 to get students placed in companies branchwise in a year." << endl
+             << "Press 0 to go back to main menu." << endl
+             << "ENTER: ";
+        int choice;
         cin >> choice;
         if (choice == 1)
         {
@@ -63,8 +63,8 @@ label:
                  << "Enter Branchcode ";
             cin >> branchCode;
             num = students_branch_yearly(database, year, branchCode);
-            cout << endl
-                 << "Total " << num << " number of students are placed in the year " << year << " in required branch." << endl;
+            cout << "Total " << num << " number of students are placed in the year " << year << " in required branch." << endl
+                 << endl;
             goto label1;
         }
         else
@@ -74,12 +74,12 @@ label:
 
         break;
     }
-    case 2://company centric
+    case 2: // company centric
     {
 
     label2:
         cout << "Press 1 to get the number of students who applied in a company in a particular year" << endl
-             << "Press 2 to get the number of students in a particular company in all years." << endl
+             << "Press 2 to get the number of students placed in a particular company in all years." << endl
              << "Press 3 to get number of students in a particular company in given year." << endl // nested
              << "Press 4 to get pass percentage of students of a given company of given year." << endl
              << "Press 5 to get in which round highest number of students were dropped in a given company in a given year." << endl
@@ -98,6 +98,8 @@ label:
             cout << "Enter the name of company (Make sure that the first letter is capital): ";
             cin >> company;
             student_company_application(database, year, company);
+            cout << endl
+                 << endl;
             goto label2;
             break;
         }
@@ -106,15 +108,17 @@ label:
             cout << "Enter the name of company (Make sure that the first letter is capital): ";
             cin >> company;
 
-            cout << "Number of students in " << company << ": " << students_in_company(database, company);
+            cout << "Number of students placed in " << company << ": " << students_in_company(database, company) << endl;
             goto label2;
         }
         case 3:
         {
-            cout << "Enter 1 to get students of a given company of a given year Branch wise."
-                 << "Enter 2 to get students of a given company of a given year Programme wise."
-                 << "Enter 3 to get total students in a given comapny of a given year." << endl;
-
+        sublabel:
+            cout << "Enter 1 to get students of a given company of a given year Branch wise." << endl
+                 << "Enter 2 to get students of a given company of a given year Programme wise." << endl
+                 << "Enter 3 to get total students placed in a given comapany in a given year." << endl
+                 << "Enter 0 to get to submenu." << endl
+                 << endl;
             int c2;
             cin >> c2;
             switch (c2)
@@ -139,7 +143,9 @@ label:
                      << endl
                      << "Enter Branchcode ";
                 cin >> branchCode;
-                cout << students_in_comp_branch_yearly(database, year, company, branchCode) << " number of students are placed " << endl;
+                cout << students_in_comp_branch_yearly(database, year, company, branchCode) << " students are placed " << endl;
+                goto sublabel;
+                break;
             }
             case 2:
             {
@@ -149,6 +155,8 @@ label:
                 cin >> company;
                 cout << endl;
                 students_in_comp_program_yearly(database, year, company);
+                goto sublabel;
+                break;
             }
             case 3:
             {
@@ -156,14 +164,45 @@ label:
                 cin >> year;
                 cout << "Enter the name of company (Make sure that the first letter is capital): ";
                 cin >> company;
-                cout << students_in_comp_year(database, year, company) << " number of students are there in " << year << " in " << company << endl
+                cout << students_in_comp_year(database, year, company) << " students are there in " << year << " in " << company << endl
                      << endl;
+                goto sublabel;
+                break;
             }
+            case (0):
+                goto label2;
             }
+        }
+        case 4:
+        { // 4 to get pass percentage of students of a given company of given year.
+            // int year;
+            // string company;
+            cout << "Enter the year: ";
+            cin >> year;
+            cout << "Enter the name of company (Make sure that the first letter is capital): ";
+            cin >> company;
+            cout << endl;
+            student_year_company_passpercentage(database, year, company);
             goto label2;
         }
+        case 5:
+        { // to get in which round highest number of students were dropped in a given company in a given year.
+            // int year;
+            // string company;
+            cout << "Enter the year: ";
+            cin >> year;
+            cout << "Enter the name of company (Make sure that the first letter is capital): ";
+            cin >> company;
+            student__round_removedhighest(database, year, company);
+            goto label2;
         }
-    }
+
+        case 0:
+        {
+            goto label;
+        }
+        }
+        }
     case 3:
     {
 
@@ -243,10 +282,7 @@ label:
             goto label;
         }
     }
-    case 4:{//4 to get pass percentage of students of a given company of given year.
-    
-    }
     }
 
-    return 0;
-}
+        return 0;
+    }
