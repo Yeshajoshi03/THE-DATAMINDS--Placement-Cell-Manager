@@ -2,6 +2,26 @@
 using namespace std;
 
 class DataBase;
+int Stoi(const string &str) // String_to_int function converts a string to the integer
+{
+    int result = 0;
+    int sign = 1;
+    int i = 0;
+    while (isspace(str[i]))
+    {
+        i++;
+    }
+    if (str[i] == '-' || str[i] == '+')
+    {
+        sign = (str[i++] == '-') ? -1 : 1;
+    }
+
+    while (isdigit(str[i]))
+    {
+        result = result * 10 + (str[i++] - '0');
+    }
+    return sign*result;
+}
 
 int random_salary_genrator()
 {
@@ -549,7 +569,7 @@ void set_data(string year_file, DataBase *All_std_data)
             getline(comp_round_file, tempalt1, ',');
             getline(comp_round_file, tempskype1, '\n');
 
-            tempID1 = stoi(tempid1);
+            tempID1 = Stoi(tempid1);
             Student *sptr1 = cptr->rptr[0]->hashStudentId(tempID1);
             sptr1->setStudent(tempname1, tempdate1, tempstr1, tempend1, tempID1, tempmail1, tempPro1, tempcont1, tempwhats1, tempalt1, tempskype1);
 
@@ -571,7 +591,7 @@ void set_data(string year_file, DataBase *All_std_data)
                 getline(comp_round_file, tempalt, ',');
                 getline(comp_round_file, tempskype, '\n');
 
-                tempID = stoi(tempid);
+                tempID = Stoi(tempid);
                 Student *sptr = cptr->rptr[0]->hashStudentId(tempID);
                 sptr->setStudent(tempname, tempdate, tempstr, tempend, tempID, tempmail, tempPro, tempcont, tempwhats, tempalt, tempskype);
             }
@@ -612,7 +632,7 @@ void set_data(string year_file, DataBase *All_std_data)
                 getline(comp_round_file, tempalt1, ',');
                 getline(comp_round_file, tempskype1, '\n');
 
-                tempID1 = stoi(tempid1);
+                tempID1 = Stoi(tempid1);
                 Student *sptr1 = cptr->rptr[i]->hashStudentId(tempID1);
                 sptr1->setStudent(tempname1, tempdate1, tempstr1, tempend1, tempID1, tempmail1, tempPro1, tempcont1, tempwhats1, tempalt1, tempskype1);
 
@@ -642,7 +662,7 @@ void set_data(string year_file, DataBase *All_std_data)
                     getline(comp_round_file, tempalt, ',');
                     getline(comp_round_file, tempskype, '\n');
 
-                    tempID = stoi(tempid);
+                    tempID = Stoi(tempid);
                     Student *sptr = cptr->rptr[i]->hashStudentId(tempID);
                     sptr->setStudent(tempname, tempdate, tempstr, tempend, tempID, tempmail, tempPro, tempcont, tempwhats, tempalt, tempskype);
                     if (i == 4)
@@ -876,13 +896,13 @@ void student__round_removedhighest(DataBase s, int year, string company)
     }
     cout<<"Highest number of students were removed in Round: "<<r+1<<endl;//" and is equal to "<<diff<<endl; 
     if(diff>75)
-    cout<<r+1<<" Round was Extremely Tough"<<endl;
+    cout<<"Round "<<r+1<<" was Extremely Tough"<<endl;
     else if(diff>60 && diff<=75)
-    cout<<r+1<<" Round was Tough"<<endl;
+    cout<<"Round "<<r+1<<" was Tough"<<endl;
     else if(diff>40 && diff<=60)
-    cout<<r+1<<" Round was Moderate"<<endl;
+    cout<<"Round "<<r+1<<" was Moderate"<<endl;
     else
-    cout<<r+1<<" Round was Easy"<<endl;
+    cout<<"Round "<<r+1<<" was Easy"<<endl;
 }
 void student_year_company_passpercentage(DataBase d,int year, string company)
 {
@@ -922,7 +942,6 @@ void student_year_company_passpercentage(DataBase d,int year, string company)
     }
     default:
     {
-        cout << "You have entered invalid case" << endl;
         cout << "You have entered invalid case" << endl;
         break;
     }

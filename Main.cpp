@@ -11,6 +11,26 @@ using namespace std;
 #define MAGENTA "\033[35m"
 #define CYAN    "\033[36m"
 #define WHITE   "\033[37m"
+// int String_to_int(const string &str) // String_to_int function converts a string to the integer
+// {
+//     int result = 0;
+//     int sign = 1;
+//     int i = 0;
+//     while (isspace(str[i]))
+//     {
+//         i++;
+//     }
+//     if (str[i] == '-' || str[i] == '+')
+//     {
+//         sign = (str[i++] == '-') ? -1 : 1;
+//     }
+
+//     while (isdigit(str[i]))
+//     {
+//         result = result * 10 + (str[i++] - '0');
+//     }
+//     return sign * result;
+// }
 int main()
 {
     DataBase database;
@@ -21,7 +41,7 @@ int main()
     cout<<endl<<endl<<endl;
     cout << "Enter the name of year file in which all the years are stored: ";
     cin >> inputyear;
-    set_data(inputyear, &database);
+    set_data("Year.txt", &database);
 
     cout << endl<< "Our placement program currently offers following data" << endl<<endl<<endl;
     int num;
@@ -202,8 +222,7 @@ label:
         }
         case 4:
         { // 4 to get pass percentage of students of a given company of given year.
-            // int year;
-            // string company;
+   
             cout << "Enter the year: ";
             cin >> year;
             cout << "Enter the name of company (Make sure that the first letter is capital): ";
@@ -216,8 +235,7 @@ label:
         }
         case 5:
         { // to get in which round highest number of students were dropped in a given company in a given year.
-            // int year;
-            // string company;
+
             cout << "Enter the year: ";
             cin >> year;
             cout<<endl;
