@@ -11,26 +11,7 @@ using namespace std;
 #define MAGENTA "\033[35m"
 #define CYAN    "\033[36m"
 #define WHITE   "\033[37m"
-// int String_to_int(const string &str) // String_to_int function converts a string to the integer
-// {
-//     int result = 0;
-//     int sign = 1;
-//     int i = 0;
-//     while (isspace(str[i]))
-//     {
-//         i++;
-//     }
-//     if (str[i] == '-' || str[i] == '+')
-//     {
-//         sign = (str[i++] == '-') ? -1 : 1;
-//     }
 
-//     while (isdigit(str[i]))
-//     {
-//         result = result * 10 + (str[i++] - '0');
-//     }
-//     return sign * result;
-// }
 int main()
 {
     DataBase database;
