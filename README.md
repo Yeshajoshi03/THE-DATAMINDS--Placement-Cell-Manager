@@ -47,6 +47,7 @@ The Placement Manager System is designed to streamline the placement process for
 - Data structure thinking
 - `Student_Complete_Information(int ID, DataBase D)`(most detailed function)
 - `students_branch_yearly(DataBase d, int y, int branch_code)`(contribution)
+- `student__round_removedhighest(DataBase s, int year, string company)`
 - CSV files
 - Error handling
 - Report making
