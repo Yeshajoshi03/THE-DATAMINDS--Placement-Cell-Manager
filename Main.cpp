@@ -51,33 +51,30 @@ int main(){
 
         switch(choice)
         {
-            case 1:
             int yr;
+            int branchCode;
+
+            case 1:
             cout << "Enter the year of which you want highest package: ";
             cin >> yr;
             cout << "Highest package of " << yr << ": " << highest_salary_year(&database, yr) << endl;
             goto label3;
 
             case 2:
-            int yr;
             cout << "Enter the year of which you want average package: ";
             cin >> yr;
             cout << "Average package of " << yr << ": " << average_salary_year(&database, yr) << endl;
             goto label3;
 
             case 3:
-            int yr;
             cout << "Enter the year of which you want lowest package: ";
             cin >> yr;
             cout << "Lowest package of " << yr << ": " << lowest_salary_year(&database, yr) << endl;
             goto label3;
 
             case 4:
-            int yr;
             cout << "Enter the year: ";
             cin >> yr;
-
-            int branchCode;
 
             cout << endl << "Branch Codes for every branch are as: " << endl
                  << "01 for B.Tech ICT" << endl
@@ -95,11 +92,8 @@ int main(){
             goto label3;
 
             case 5:
-            int yr;
             cout << "Enter the year: ";
             cin >> yr;
-
-            int branchCode;
 
             cout << endl << "Branch Codes for every branch are as: " << endl
                  << "01 for B.Tech ICT" << endl
