@@ -493,7 +493,6 @@ void set_data(string year_file, DataBase *All_std_data)
         getline(my_yr_file, yearF, '\n');
 
         int t_std = 0;
-        int t_std = 0;
 
         int int_year = 0; // string year to int year
         for (int j = 0; j < 4; j++)
@@ -949,35 +948,36 @@ void student__round_removedhighest(DataBase s, int year, string company)
 {
     float temp;
     float diff=0;
-    int initial,final;
-    int i,cR=0;
+    float initial,final;
+    int i;
 
     cout<<"                               Round toughness index                     "<<endl;
     cout<<"1.Extremely Tough: students removed is greater than 75%"<<endl;
     cout<<"2.Tough: students removed is greater than 60%"<<endl;
     cout<<"3.Moderate: students removed is greater than 40%"<<endl;
     cout<<"4.Easy: students removed is greater than 20%"<<endl<<endl<<endl<<endl;
-
+    int r=0;
     for(i=0;i<4;i++)
     {
+        
         initial=s.hashRtYear(year)->accessHashCompName(company)->rptr[i]->numS;
         final=s.hashRtYear(year)->accessHashCompName(company)->rptr[i+1]->numS;
         temp=(initial-final)*100.0/initial;
         if(temp>diff)
         {
             diff=temp;
-            cR++;
-        }
+            r=i;
+        }       
     }
-    cout<<"Highest number of students were removed in Round: "<<cR-1<<endl;//" and is equal to "<<diff<<endl; 
+    cout<<"Highest number of students were removed in Round: "<<r+1<<endl;//" and is equal to "<<diff<<endl; 
     if(diff>75)
-    cout<<cR-1<<" Round was Extremely Tough"<<endl;
+    cout<<r+1<<" Round was Extremely Tough"<<endl;
     else if(diff>60 && diff<=75)
-    cout<<cR-1<<" Round was Tough"<<endl;
+    cout<<r+1<<" Round was Tough"<<endl;
     else if(diff>40 && diff<=60)
-    cout<<cR-1<<" Round was Moderate"<<endl;
+    cout<<r+1<<" Round was Moderate"<<endl;
     else
-    cout<<cR-1<<" Round was Easy"<<endl;
+    cout<<r+1<<" Round was Easy"<<endl;
 }
 void student_year_company_passpercentage(DataBase d,int year, string company)
 {
