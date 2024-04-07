@@ -1,22 +1,34 @@
 #include <iostream>
 using namespace std;
+#include"DataStructure.cpp"
 int main(){
-    
+    DataBase database;
+    set_data("Year.txt",&database);
+
     cout <<"Welcome to our placement cell manager program." << endl;
-    cout <<"What do you want ??         "<<endl;
+
     int num;
-    cout <<"IF you want student related details:: press 1"<<endl;
-    cout <<"IF you want package related details:: press 2"<<endl;
-    cout <<"IF you want studet placed data:: press 3"<<endl;
-    cout <<"IF you want complany placed data:: press 4"<<endl;
+    cout <<"If you want student centric data:: press 1"<<endl;
+    cout <<"If you want company centric data:: press 2"<<endl;
+    cout <<"If you want package related details:: press 3"<<endl;
+    cout << "To exit enter 0" << endl;
 
     cout <<"ENTER :: ";
     cin >>num;
     switch (num)
     {
     case 1:{
-        cout <<"If you want complete details of student : press 1"<<endl;
-        cout <<"If you want "
+        cout <<"Press 1 for complete details of student"<<endl
+             <<"Press 2 to get students placed in companies branchwise in a year."<<endl
+             <<"Press 0 to go back to main menu." << endl;
+             int choice;
+             cin>>choice;
+        if(choice ==1){
+            cout<<"Enter Student ID: ";
+            int id;
+            cin>>id;
+            Student_Complete_Information(id,database);
+        }
     }break;
     case 2:{
 

@@ -5,8 +5,6 @@ class DataBase;
 
 int random_salary_genrator()
 {
-    srand(time(NULL));
-
     int num = rand() % 90;
 
     if (num >= 5)
@@ -84,7 +82,7 @@ public:
         while (1)
         {
             int h;
-            h = (id % numS + i) % numS; // double hashing
+            h = (id % numS + i) % numS; // linear probing
             if (student[h].sName.empty())
             {
                 return &student[h];
@@ -122,6 +120,7 @@ public:
 
     friend int students_in_comp_branch_yearly(DataBase d, int y, string company_name, int branch_code);
     friend void student_company_application(DataBase s, int year, string company);
+    friend void studet_year_company_passpercentage(DataBase d, int year, string company);
 };
 
 class Company
@@ -186,8 +185,12 @@ public:
     friend int students_in_company(DataBase d, string company_name);
     friend void Student_Complete_Information(int ID, DataBase D);
     friend void students_in_comp_program_yearly(DataBase d, int y, string company_name);
+    friend void student_allcompany_applied(DataBase s, string sID);
     friend int students_branch_yearly(DataBase d, int y, int branch_code);
     friend void student_company_application(DataBase s, int year, string company);
+    friend int average_salary_year_branch(DataBase *d, int y, int b_code);
+    friend int highest_salary_year_branch(DataBase *d, int y, int b_code);
+    friend void studet_year_company_passpercentage(DataBase d, int year, string company);
 };
 
 class Year
@@ -197,15 +200,17 @@ private:
     int No_of_Comp;
     Company *company;
 
-    int highest_package, lowest_package;
+    int highest_package, lowest_package, average_package;
 
     vector<vector<Student *> *> Ybict;
 
 public:
-    Year() : highest_package(0), lowest_package(9000000) {}
+    Year() : highest_package(0), lowest_package(9000000), average_package(0) {}
 
-    friend int highest_salery_year(DataBase *d, int y);
-    friend int lowest_salery_year(DataBase *d, int y);
+    friend int highest_salary_year(DataBase *d, int y);
+    friend int lowest_salary_year(DataBase *d, int y);
+    friend int average_salary_year(DataBase *d, int y);
+
     void allocateCompMemory(int noC)
     {
         company = new Company[noC];
@@ -216,10 +221,7 @@ public:
             Ybict.push_back(&company[i].BIct);
         }
     }
-    Company *comptr()
-    {
-        return this->company;
-    }
+
     void setYear(int c, int r, int i, string n);
     friend void set_data(string year_file, DataBase *);
     friend int students_in_company(DataBase d, string company_name);
@@ -244,7 +246,7 @@ public:
             h = (comp_code % No_of_Comp + i) % No_of_Comp; // double hashing
             if (company[h].cName.empty())
             {
-                company[h].cName = comp_name;
+                company[h].cName = comp_name.erase(comp_name.length() - 12, 12);
                 return &company[h];
             }
             else
@@ -254,6 +256,8 @@ public:
         }
     }
     friend void Student_Complete_Information(int ID, DataBase D);
+    friend int average_salary_year_branch(DataBase *d, int y, int b_code);
+    friend int highest_salary_year_branch(DataBase *d, int y, int b_code);
 
     Company *accessHashCompName(string company_name)
     {
@@ -291,6 +295,7 @@ public:
         return NULL;
     }
     friend int students_branch_yearly(DataBase d, int y, int branch_code);
+    friend void studet_year_company_passpercentage(DataBase d, int year, string company);
 };
 
 class DataBase
@@ -331,17 +336,97 @@ public:
     }
     friend int students_in_company(DataBase d, string company_name);
     friend void Student_Complete_Information(string ID, DataBase D);
-
 };
 
-int highest_salery_year(DataBase *d, int y)
+int highest_salary_year(DataBase *d, int y)
 {
     return d->hashRtYear(y)->highest_package;
 }
 
-int lowest_salery_year(DataBase *d, int y)
+int lowest_salary_year(DataBase *d, int y)
 {
     return d->hashRtYear(y)->lowest_package;
+}
+
+int average_salary_year(DataBase *d, int y)
+{
+    return d->hashRtYear(y)->average_package;
+}
+
+int average_salary_year_branch(DataBase *d, int y, int b_code)
+{
+    int sum = 0;
+    int no_st = 0;
+
+    switch (b_code)
+    {
+    case (01):
+        for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
+        {
+            Company *cptr = &d->hashRtYear(y)->company[i];
+            sum = sum + (cptr->salery * cptr->BIct.size());
+            no_st = no_st + cptr->BIct.size();
+        }
+        break;
+    case (0144):
+        for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
+        {
+            Company *cptr = &d->hashRtYear(y)->company[i];
+            sum = sum + (cptr->salery * cptr->BIctCs.size());
+            no_st = no_st + cptr->BIctCs.size();
+        }
+        break;
+    case (03):
+        for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
+        {
+            Company *cptr = &d->hashRtYear(y)->company[i];
+            sum = sum + (cptr->salery * cptr->BMnc.size());
+            no_st = no_st + cptr->BMnc.size();
+        }
+        break;
+    case (04):
+        for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
+        {
+            Company *cptr = &d->hashRtYear(y)->company[i];
+            sum = sum + (cptr->salery * cptr->BEvd.size());
+            no_st = no_st + cptr->BEvd.size();
+        }
+        break;
+    case (11):
+        for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
+        {
+            Company *cptr = &d->hashRtYear(y)->company[i];
+            sum = sum + (cptr->salery * cptr->MIct.size());
+            no_st = no_st + cptr->MIct.size();
+        }
+        break;
+    case (12):
+        for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
+        {
+            Company *cptr = &d->hashRtYear(y)->company[i];
+            sum = sum + (cptr->salery * cptr->MScIt.size());
+            no_st = no_st + cptr->MScIt.size();
+        }
+        break;
+    case (14):
+        for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
+        {
+            Company *cptr = &d->hashRtYear(y)->company[i];
+            sum = sum + (cptr->salery * cptr->MDes.size());
+            no_st = no_st + cptr->MDes.size();
+        }
+        break;
+    case (18):
+        for (int i = 0; i < d->hashRtYear(y)->No_of_Comp; i++)
+        {
+            Company *cptr = &d->hashRtYear(y)->company[i];
+            sum = sum + (cptr->salery * cptr->MScDS.size());
+            no_st = no_st + cptr->MScDS.size();
+        }
+        break;
+    }
+
+    return sum / no_st;
 }
 
 void startdata(ifstream *f)
@@ -388,6 +473,8 @@ void set_data(string year_file, DataBase *All_std_data)
         string yearF;
         getline(my_yr_file, yearF, '\n');
 
+        int t_std = 0;
+
         int int_year = 0; // string year to int year
         for (int j = 0; j < 4; j++)
         { // first 4 chars from filename
@@ -425,7 +512,7 @@ void set_data(string year_file, DataBase *All_std_data)
             {
                 yptr->highest_package = sal;
             }
-            else if (sal < yptr->lowest_package)
+            if (sal < yptr->lowest_package)
             {
                 yptr->lowest_package = sal;
             }
@@ -530,6 +617,9 @@ void set_data(string year_file, DataBase *All_std_data)
                 if (i == 4)
                 {
                     cptr->separate_branchwise(tempid1, sptr1);
+
+                    t_std = t_std + No_std;
+                    yptr->average_package = yptr->average_package + (sal * No_std);
                 }
 
                 while (comp_round_file.peek() != EOF)
@@ -564,6 +654,8 @@ void set_data(string year_file, DataBase *All_std_data)
         }
 
         my_comp_file.close();
+
+        yptr->average_package = yptr->average_package / t_std;
     }
     my_yr_file.close();
 }
@@ -574,31 +666,16 @@ void Student_Complete_Information(int ID, DataBase D)
     int year = ID / 100000;
 
     int check = (ID / 10000) % 10;
-    // int id = 0, b = 0;
 
-    // for (int i = 0; i < 9; i++){
-    //     id = id + ((int)ID.at(i) - 48) * pow(10, 8 - i);
-    // }
-    // int year = 0;
-    // for (int i = 0; i < 4; i++){
-    //     year = year + ((int)(ID[i]) - 48) * (pow(10, 3 - i));
-    // }
-    // for (int i = 4; i < 6; i++)
-    // {
-    //     b = b + ((int)ID[i] - 48) * (pow(10, 5 - i));
-    // }
     if (check == 0)
     {
         year += 4;
-        // cout << "test" << endl;
     }
     else if (check == 1)
     {
         year += 2;
-        // cout << "test" << endl;
     }
-    // cout << year << endl;
-    // cout<<D.hashRtYear(2020)->accessHashCompName("Google")->R1.accesshashStdId(201601244)->sName;
+
     for (int i = 0; i < D.hashRtYear(year)->No_of_Comp; i++)
     {
         int counter = 0;
@@ -616,7 +693,7 @@ void Student_Complete_Information(int ID, DataBase D)
                     cout << "The email ID of student is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->email << endl;
                     cout << "The Whatsapp no. of stdudent is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->Whatsapp_no << endl;
                     cout << "The skype ID of student is: " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->skypeID << endl;
-                    cout << "The program of student enrolled is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->program << endl<<endl;
+                    cout << "The program of student enrolled is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->program << endl;
                 }
             }
         }
@@ -625,7 +702,6 @@ void Student_Complete_Information(int ID, DataBase D)
             cout << "The student appeared for Company " << D.hashRtYear(year)->company[i].cName << endl;
             cout << "He cleared till Round " << counter << endl;
         }
-        // D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)==;
     }
 }
 
@@ -637,22 +713,8 @@ void students_in_comp_program_yearly(DataBase d, int y, string company_name);
 void display(vector<Student *> v);
 void infile(vector<Student *> v, ofstream &f);
 int students_branch_yearly(DataBase d, int y, int branch_code);
-
-int main()
-{
-    DataBase database;
-
-    set_data("Year.txt", &database);
-    int year;
-    string company;
-
-   
-    int temp;
-    cout <<"Enter : "<<endl;
-    cin >>temp;
-    Student_Complete_Information(temp, database);
-    return 0;
-}
+void students_in_comp_program_yearly(DataBase d, int y, string company_name);
+void studet_year_company_passpercentage(DataBase d, int year, string company);
 
 void student_company_application(DataBase s, int year, string company)
 {
@@ -683,7 +745,48 @@ int students_in_company(DataBase d, string company_name)
     }
     return num;
 }
-
+void studet_year_company_passpercentage(DataBase d, int year, string company)
+{
+    cout << "Press 1 to get total percentage of students placed" << endl;
+    cout << "Press 2 to get pass percetage of students from round to another round" << endl;
+    int choice;
+    cin >> choice;
+    float percentage;
+    switch (choice)
+    {
+    case 1:
+    {
+        int numR1 = d.hashRtYear(year)->accessHashCompName(company)->R1.numS;
+        int numR5 = d.hashRtYear(year)->accessHashCompName(company)->Final.numS;
+        percentage = (numR5) * 100.0 / numR1;
+        cout << fixed << setprecision(2) << percentage << "%"
+                                                          "students were placed"
+             << endl;
+        break;
+    }
+    case 2:
+    {
+        int numRInitial;
+        int numRAnother;
+        cout << "Enter initial round number" << endl;
+        cout << "Enter another round number" << endl;
+        cin >> numRInitial;
+        cin >> numRAnother;
+        int numRIni = d.hashRtYear(year)->accessHashCompName(company)->rptr[numRInitial - 1]->numS;
+        int numRAno = d.hashRtYear(year)->accessHashCompName(company)->rptr[numRAnother - 1]->numS;
+        percentage = (numRAno) * 100.0 / numRIni;
+        cout << fixed << setprecision(2) << percentage << " %"
+                                                          " students were placed from Round"
+             << numRInitial << " to Round " << numRAnother << endl;
+        break;
+    }
+    default:
+    {
+        cout << "You have entered invalid case" << endl;
+        break;
+    }
+    }
+}
 int students_in_comp_year(DataBase d, int y, string company_name)
 { // Number of students placed in a particular company in a given year
     if (d.hashRtYear(y)->accessHashCompName(company_name) != NULL)
