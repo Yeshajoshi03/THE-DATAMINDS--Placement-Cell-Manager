@@ -82,7 +82,7 @@ public:
         while (1)
         {
             int h;
-            h = (id % numS + i) % numS; // linear probing
+            h = (id + i) % numS; // linear probing
             if (student[h].sName.empty())
             {
                 return &student[h];
@@ -96,13 +96,14 @@ public:
     }
     Student *accesshashStdId(int id)
     {
-        int i = 0;
+        int i = 0, h=0;
         for (i = 0; i < numS; i++)
         {
-            int h;
-            h = (id % numS + i) % numS; // linear probing
+            
+            h = (id + i) % numS; // linear probing
             if (student[h].id == id)
             {
+                cout<<h<<endl;
                 return &student[h];
                 break;
             }
@@ -111,6 +112,8 @@ public:
                 i++;
             }
         }
+
+        cout << "student not found." << endl;
         return NULL;
     }
 
@@ -675,16 +678,17 @@ void Student_Complete_Information(int ID, DataBase D)
     {
         year += 2;
     }
-
+    // cout << year;
     for (int i = 0; i < D.hashRtYear(year)->No_of_Comp; i++)
     {
         int counter = 0;
         for (int j = 0; j < 5; j++)
-        {
+        {   
             if (D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID) != NULL)
             {
 
                 counter++;
+                cout << counter << endl;
 
                 if (counter == 1)
                 {
@@ -695,6 +699,8 @@ void Student_Complete_Information(int ID, DataBase D)
                     cout << "The skype ID of student is: " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->skypeID << endl;
                     cout << "The program of student enrolled is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->program << endl;
                 }
+            }else{
+                continue;
             }
         }
         if (counter > 0)
@@ -742,7 +748,15 @@ int students_in_company(DataBase d, string company_name)
         {
             num = num + d.year[i].accessHashCompName(company_name)->Final.numS;
         }
+        for(int j=0; j<d.year[i].No_of_Comp ; j++){
+            for(int k=0; k<d.year[i].company[j].Final.numS; k++){
+                cout<<d.year[i].company[j].Final.accesshashStdId(d.year[i].company[j].Final.student[k].id)->sName<<" "<<d.year[i].company[j].Final.student[k].sName<<endl;
+            }
+            cout<<endl;
+        }
+        cout<<endl;
     }
+    
     return num;
 }
 void studet_year_company_passpercentage(DataBase d, int year, string company)
