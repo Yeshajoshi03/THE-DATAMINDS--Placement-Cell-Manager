@@ -31,6 +31,7 @@ int main(){
             int id;
             cin>>id;
             Student_Complete_Information(id,database);
+            goto label;
         }
     }break;
     case 2:{

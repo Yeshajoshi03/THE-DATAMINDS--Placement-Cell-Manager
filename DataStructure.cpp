@@ -94,17 +94,17 @@ public:
             }
         }
     }
-    Student *accesshashStdId(int id)
+    Student *accesshashStdId(int ID)
     {
         int i = 0;
         for (i = 0; i < numS; i++)
         {
             int h;
-            h = (id % numS + i) % numS; // linear probing
-            if (student[h].id == id)
+            h = (ID % numS + i) % numS; // linear probing
+            if (student[h].id == ID)
             {
                 return &student[h];
-                break;
+                // break;
             }
             else
             {
