@@ -254,7 +254,7 @@ label:
                  << "Enter Branchcode: ";
             cin >> branchCode;
 
-            // cout << "Highest package of " << yr << " of the required branch: " << highest_salary_year_branch(&database, yr, branchCode) << endl;
+            cout << "Highest package of " << yr << " of the required branch: " << highest_salary_year_branch(&database, yr, branchCode) << endl;
             goto label3;
 
         case 5:
