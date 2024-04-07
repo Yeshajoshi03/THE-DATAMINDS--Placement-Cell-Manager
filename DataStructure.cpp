@@ -875,13 +875,13 @@ void student__round_removedhighest(DataBase s, int year, string company)
     }
     cout<<"Highest number of students were removed in Round: "<<r+1<<endl;//" and is equal to "<<diff<<endl; 
     if(diff>75)
-    cout<<r+1<<" Round was Extremely Tough"<<endl;
+    cout<<"Round "<<r+1<<" was Extremely Tough"<<endl;
     else if(diff>60 && diff<=75)
-    cout<<r+1<<" Round was Tough"<<endl;
+    cout<<"Round "<<r+1<<" was Tough"<<endl;
     else if(diff>40 && diff<=60)
-    cout<<r+1<<" Round was Moderate"<<endl;
+    cout<<"Round "<<r+1<<" was Moderate"<<endl;
     else
-    cout<<r+1<<" Round was Easy"<<endl;
+    cout<<"Round "<<r+1<<" was Easy"<<endl;
 }
 void student_year_company_passpercentage(DataBase d,int year, string company)
 {
@@ -921,7 +921,6 @@ void student_year_company_passpercentage(DataBase d,int year, string company)
     }
     default:
     {
-        cout << "You have entered invalid case" << endl;
         cout << "You have entered invalid case" << endl;
         break;
     }
