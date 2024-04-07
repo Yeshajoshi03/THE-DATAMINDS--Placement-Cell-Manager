@@ -116,7 +116,7 @@ public:
 
     friend int students_in_comp_year(DataBase d, int y, string company_name);
     friend int students_in_company(DataBase d, string company_name);
-    friend void Student_Complete_Information(string ID, DataBase D);
+    friend void Student_Complete_Information(int ID, DataBase D);
     friend void student__round_removedhighest(DataBase s, int year, string company);
     friend int students_in_comp_branch_yearly(DataBase d, int y, string company_name, int branch_code);
     friend void student_company_application(DataBase s, int year, string company);
