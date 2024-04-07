@@ -8,6 +8,9 @@ int main(){
     cout <<"Welcome to our placement cell manager program." << endl;
 
     int num;
+
+    label:
+
     cout <<"If you want student centric data:: press 1"<<endl;
     cout <<"If you want company centric data:: press 2"<<endl;
     cout <<"If you want package related details:: press 3"<<endl;
@@ -20,7 +23,7 @@ int main(){
     case 1:{
         cout <<"Press 1 for complete details of student"<<endl
              <<"Press 2 to get students placed in companies branchwise in a year."<<endl
-             <<"Press 0 to go back to main menu." << endl;
+             <<"Press 0 to go back to main menu." << endl <<"ENTER: ";
              int choice;
              cin>>choice;
         if(choice ==1){
@@ -35,24 +38,91 @@ int main(){
 
     }break;
     case 3:{
-        int temp;
-        cout <<"For highest package related information::press 1"<<endl;
-        cout <<"For lowest package related information::press 2"<<endl;
-        cout <<"For average package related information:: press 3"<<endl;
-        cin >>temp;
-        if(temp==1){
+        int choice;
 
-        }
-        else if(temp==2){
+        label3:
+        cout <<"Press 1 to get highest package of any year."<<endl
+             <<"Press 2 to get average package of any year."<<endl
+             <<"Prsee 3 to get lowest package of any year"<<endl
+             <<"Prsee 4 to get highest package of a particualar branch in any year"<<endl
+             <<"Prsee 5 to get average package of a particualar branch in any year"<<endl
+             <<"Press 0 to go to main menu." <<"ENTER: ";
+        cin >>choice;
 
-        }
-        else if(temp==3){
-            
+        switch(choice)
+        {
+            case 1:
+            int yr;
+            cout << "Enter the year of which you want highest package: ";
+            cin >> yr;
+            cout << "Highest package of " << yr << ": " << highest_salary_year(&database, yr) << endl;
+            goto label3;
+
+            case 2:
+            int yr;
+            cout << "Enter the year of which you want average package: ";
+            cin >> yr;
+            cout << "Average package of " << yr << ": " << average_salary_year(&database, yr) << endl;
+            goto label3;
+
+            case 3:
+            int yr;
+            cout << "Enter the year of which you want lowest package: ";
+            cin >> yr;
+            cout << "Lowest package of " << yr << ": " << lowest_salary_year(&database, yr) << endl;
+            goto label3;
+
+            case 4:
+            int yr;
+            cout << "Enter the year: ";
+            cin >> yr;
+
+            int branchCode;
+
+            cout << endl << "Branch Codes for every branch are as: " << endl
+                 << "01 for B.Tech ICT" << endl
+                 << "0144 for B.Tech ICT-CS" << endl
+                 << "03 for B.Tech MNC" << endl
+                 << "04 for B.Tech EVD" << endl
+                 << "11 for M.Tech ICT" << endl
+                 << "12 for MSc IT" << endl
+                 << "14 for MDes" << endl
+                 << "18 for MSc DS" << endl
+                 <<endl<<"Enter Branchcode: " ;
+            cin>>branchCode;
+
+            cout << "Highest package of " << yr << " of the required branch: " << highest_salary_year_branch(&database, yr, branchCode) << endl;
+            goto label3;
+
+            case 5:
+            int yr;
+            cout << "Enter the year: ";
+            cin >> yr;
+
+            int branchCode;
+
+            cout << endl << "Branch Codes for every branch are as: " << endl
+                 << "01 for B.Tech ICT" << endl
+                 << "0144 for B.Tech ICT-CS" << endl
+                 << "03 for B.Tech MNC" << endl
+                 << "04 for B.Tech EVD" << endl
+                 << "11 for M.Tech ICT" << endl
+                 << "12 for MSc IT" << endl
+                 << "14 for MDes" << endl
+                 << "18 for MSc DS" << endl
+                 <<endl<<"Enter Branchcode: " ;
+            cin>>branchCode;
+
+            cout << "Average package of " << yr << " of the required branch: " << average_salary_year_branch(&database, yr, branchCode) << endl;
+            goto label3;
+
+            case 0:
+            goto label;
         }
 
     }break;
 
-    case 4:{
+    case 0:{
 
 
     }break;
