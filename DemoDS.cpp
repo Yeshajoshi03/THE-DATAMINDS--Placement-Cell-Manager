@@ -117,7 +117,7 @@ public:
     friend int students_in_comp_year(DataBase d, int y, string company_name);
     friend int students_in_company(DataBase d, string company_name);
     friend void Student_Complete_Information(string ID, DataBase D);
-
+    friend void student__round_removedhighest(DataBase s, int year, string company);
     friend int students_in_comp_branch_yearly(DataBase d, int y, string company_name, int branch_code);
     friend void student_company_application(DataBase s, int year, string company);
     friend void studet_year_company_passpercentage(DataBase d,int year, string company);
@@ -192,6 +192,7 @@ public:
     friend int average_salary_year_branch(DataBase *d, int y, int b_code);
     friend int highest_salary_year_branch(DataBase *d, int y, int b_code);
     friend void studet_year_company_passpercentage(DataBase d,int year, string company);
+    friend void student__round_removedhighest(DataBase s, int year, string company);
 
 };
 
@@ -260,7 +261,6 @@ public:
     friend void Student_Complete_Information(int ID, DataBase D);
     friend int average_salary_year_branch(DataBase *d, int y, int b_code);
     friend int highest_salary_year_branch(DataBase *d, int y, int b_code);
-
     Company *accessHashCompName(string company_name)
     {
         int comp_code = 0; // company name to company code given by user
@@ -297,9 +297,9 @@ public:
         return NULL;
     }
     friend int students_branch_yearly(DataBase d, int y, int branch_code);
+    friend void student__round_removedhighest(DataBase s, int year, string company);
     friend void studet_year_company_passpercentage(DataBase d,int year, string company);
-
-    
+    friend void company_year(DataBase d, string company);
 };
 
 class DataBase
@@ -340,6 +340,7 @@ public:
     }
     friend int students_in_company(DataBase d, string company_name);
     friend void Student_Complete_Information(string ID, DataBase D);
+    friend void company_year(DataBase d, string company);
 
 };
 
@@ -737,6 +738,8 @@ void infile(vector<Student *> v, ofstream &f);
 int students_branch_yearly(DataBase d, int y, int branch_code);
 void students_in_comp_program_yearly(DataBase d, int y, string company_name);
 void studet_year_company_passpercentage(DataBase d,int year, string company);
+void student__round_removedhighest(DataBase d,int year,string company);
+
 
 int main()
 {
@@ -744,9 +747,9 @@ int main()
 
     set_data("Year.txt", &database);
 
-    cout << average_salary_year_branch(&database, 2019, 01) << endl;
-    cout << average_salary_year_branch(&database, 2019, 0144) << endl;
-    cout << average_salary_year_branch(&database, 2019, 03) << endl;
+    // cout << average_salary_year_branch(&database, 2019, 01) << endl;
+    // cout << average_salary_year_branch(&database, 2019, 0144) << endl;
+    // cout << average_salary_year_branch(&database, 2019, 03) << endl;
     // int year;
     // string company;
     // int x;
@@ -794,20 +797,124 @@ int main()
     // // cout<<"Enter the name of the company and year to get the number of studets who are placed according to the program"<<endl;
     // // cin>>year2;
     // // cin>>company2;
-    Student_Complete_Information(201601044, database);
+    // Student_Complete_Information(201601044, database);
     // // students_in_comp_program_yearly(database, year2, company2);
     // cout<< students_in_company(database,"Sprinkler");
     // cout<<students_in_comp_year(database,2020,"Bell");
     // cout<<students_branch_yearly(database,2020,01);
-    cout<<"Enter year and company name to get the pass percentage"<<endl;
-    int year3;
-    string company3;
-    cin>>year3;
-    cin>>company3;
-    studet_year_company_passpercentage(database, year3,company3);
+    // cout<<"Enter year and company name to get the pass percentage"<<endl;
+    // int year3;
+    // string company3;
+    // cin>>year3;
+    // cin>>company3;
+    // studet_year_company_passpercentage(database, year3,company3);
+    // cout<<"Enter year and company to get the round in which the highest number of students are removed"<<endl;
+    // int year4;
+    // string company4;
+    // cin>>year4;
+    // cin>>company4;
+    // student__round_removedhighest(database, year4, company4);
+    cout<<"Enter compnay to see the years in which company visited for campus placement"<<endl;
+    string company5;
+    cin>>company5;
+    company_year(database, company5);
     return 0;
 }
-
+int highest_salary_year_branch(DataBase *d, int y, int b_code)
+{
+    int highest = 0;
+    switch (b_code)
+    {
+    case (01):
+        for(int i=0 ; i<d->hashRtYear(y)->No_of_Comp ; i++)
+        {
+            if((d->hashRtYear(y)->company[i].BIct.size() > 0) && (highest < d->hashRtYear(y)->company[i].salery))
+            {
+                highest = d->hashRtYear(y)->company[i].salery;
+            }
+        }
+        break;
+    case (0144):
+        for(int i=0 ; i<d->hashRtYear(y)->No_of_Comp ; i++)
+        {
+            if((d->hashRtYear(y)->company[i].BIctCs.size() > 0) && (highest < d->hashRtYear(y)->company[i].salery))
+            {
+                highest = d->hashRtYear(y)->company[i].salery;
+            }
+        }
+        break;
+    case (03):
+        for(int i=0 ; i<d->hashRtYear(y)->No_of_Comp ; i++)
+        {
+            if((d->hashRtYear(y)->company[i].BMnc.size() > 0) && (highest < d->hashRtYear(y)->company[i].salery))
+            {
+                highest = d->hashRtYear(y)->company[i].salery;
+            }
+        }
+        break;
+    case (04):
+        for(int i=0 ; i<d->hashRtYear(y)->No_of_Comp ; i++)
+        {
+            if((d->hashRtYear(y)->company[i].BEvd.size() > 0) && (highest < d->hashRtYear(y)->company[i].salery))
+            {
+                highest = d->hashRtYear(y)->company[i].salery;
+            }
+        }
+        break;
+    case (11):
+        for(int i=0 ; i<d->hashRtYear(y)->No_of_Comp ; i++)
+        {
+            if((d->hashRtYear(y)->company[i].MIct.size() > 0) && (highest < d->hashRtYear(y)->company[i].salery))
+            {
+                highest = d->hashRtYear(y)->company[i].salery;
+            }
+        }
+        break;
+    case (12):
+        for(int i=0 ; i<d->hashRtYear(y)->No_of_Comp ; i++)
+        {
+            if((d->hashRtYear(y)->company[i].MScIt.size() > 0) && (highest < d->hashRtYear(y)->company[i].salery))
+            {
+                highest = d->hashRtYear(y)->company[i].salery;
+            }
+        }
+        break;
+    case (14):
+        for(int i=0 ; i<d->hashRtYear(y)->No_of_Comp ; i++)
+        {
+            if((d->hashRtYear(y)->company[i].MDes.size() > 0) && (highest < d->hashRtYear(y)->company[i].salery))
+            {
+                highest = d->hashRtYear(y)->company[i].salery;
+            }
+        }
+        break;
+    case (18):
+        for(int i=0 ; i<d->hashRtYear(y)->No_of_Comp ; i++)
+        {
+            if((d->hashRtYear(y)->company[i].MScDS.size() > 0) && (highest < d->hashRtYear(y)->company[i].salery))
+            {
+                highest = d->hashRtYear(y)->company[i].salery;
+            }
+        }
+        break;
+    }
+}
+void company_year(DataBase d, string company)
+{
+    int yr=d.no_of_years();
+    int i;
+    for(i=0;i<yr;i++)
+    {
+        if(d.year[i].accessHashCompName(company)!=NULL)
+        {
+            cout<<"Year:"<<d.year[i].yr<<endl;
+        }
+        else
+        {
+            cout<<"The company did not visit the campus for placement drive"<<endl;
+        }
+    }
+}
 void student_company_application(DataBase s, int year, string company)
 {
     if (s.hashRtYear(year)->accessHashCompName(company) == NULL)
@@ -836,6 +943,41 @@ int students_in_company(DataBase d, string company_name)
         }
     }
     return num;
+}
+void student__round_removedhighest(DataBase s, int year, string company)
+{
+    int temp;
+    int diff=0;
+    int initial,final;
+    int i,cR=0;
+    cout<<"                               Round toughness index                     "<<endl;
+    cout<<"1.Extremely Tough: students removed is greater than 100"<<endl;
+    cout<<"2.Tough: students removed is greater than 60"<<endl;
+    cout<<"3.Moderate: students removed is greater than 40"<<endl;
+    cout<<"4.Easy: students removed is greater than 20"<<endl;
+    cout<<""<<endl;
+    cout<<""<<endl;
+    cout<<""<<endl;
+    for(i=0;i<4;i++)
+    {
+        initial=s.hashRtYear(year)->accessHashCompName(company)->rptr[i]->numS;
+        final=s.hashRtYear(year)->accessHashCompName(company)->rptr[i+1]->numS;
+        temp=initial-final;
+        if(temp>diff)
+        {
+            diff=temp;
+            cR++;
+        }
+    }
+    cout<<"Highest number of students were removed in Round:"<<cR<<" and is equal to "<<diff<<endl; 
+    if(diff>100)
+    cout<<"Round was Extremely Tough"<<endl;
+    else if(diff>60)
+    cout<<"Round was Tough"<<endl;
+    else if(diff>40)
+    cout<<"Round was Moderate"<<endl;
+    else
+    cout<<"Round was Easy"<<endl;
 }
 void studet_year_company_passpercentage(DataBase d,int year, string company)
 {
