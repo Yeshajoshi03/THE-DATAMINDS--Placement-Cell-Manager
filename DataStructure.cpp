@@ -962,7 +962,7 @@ int students_branch_yearly(DataBase d, int y, int branch_code)
         {
             result = result + d.hashRtYear(y)->company[i].MIct.size();
             infile(d.hashRtYear(y)->company[i].MIct, fp);
-        }
+        }           
         fp.close();
         break;
     }
