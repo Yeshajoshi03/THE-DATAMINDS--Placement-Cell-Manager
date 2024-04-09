@@ -1,4 +1,6 @@
 #include <iostream>
+#include <chrono>
+#include <thread>
 using namespace std;
 #include "DataStructure.cpp"
 #define RESET   "\033[0m"
@@ -9,6 +11,7 @@ using namespace std;
 #define MAGENTA "\033[35m"
 #define CYAN    "\033[36m"
 #define WHITE   "\033[37m"
+
 int main()
 {
     DataBase database;
@@ -19,7 +22,7 @@ int main()
     cout<<endl<<endl<<endl;
     cout << "Enter the name of year file in which all the years are stored: ";
     cin >> inputyear;
-    set_data("Year.txt", &database);
+    set_data(inputyear, &database);
 
     cout << endl<< "Our placement program currently offers following data" << endl<<endl<<endl;
     int num;

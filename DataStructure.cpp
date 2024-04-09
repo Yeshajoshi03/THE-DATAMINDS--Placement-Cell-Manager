@@ -287,7 +287,7 @@ public:
             comp_code = comp_code + temp;
         }
         int i = 0;
-        for (i = 0; i < No_of_Comp; i++)
+        for (i = 0; i < No_of_Comp; )
         {
 
             int h;
