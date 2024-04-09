@@ -1,5 +1,8 @@
 # Placement Manager System
 
+## Our Repository
+Our git repository contains 1_Main.cpp which is the executable file, DataStructure.cpp which is our data structure and required csv and txt input files.
+
 ## Overview
 The Placement Manager System is designed to streamline the placement process for the university. It includes various functionalities to manage student data, company information, and placement statistics.
 

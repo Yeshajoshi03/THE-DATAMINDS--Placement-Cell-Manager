@@ -254,7 +254,7 @@ label:
             cout << "Enter the year of which you want highest package: ";
             cin >> yr;
             cout<<endl;
-            cout << "Highest package of " << yr << ": " << highest_salary_year(&database, yr) << endl;
+            cout << "Highest package of " << yr << ": Rs. " << highest_salary_year(&database, yr) << endl;
             cout<<endl;
             cout<<CYAN<<"------------------------------------------------------------------------------------------------------"<<RESET<<endl;
             goto label3;
@@ -263,7 +263,7 @@ label:
             cout << "Enter the year of which you want average package: ";
             cin >> yr;
             cout<<endl;
-            cout << "Average package of " << yr << ": " << average_salary_year(&database, yr) << endl;
+            cout << "Average package of " << yr << " : Rs. " << average_salary_year(&database, yr) << endl;
             cout<<endl;
             cout<<CYAN<<"------------------------------------------------------------------------------------------------------"<<RESET<<endl;
             goto label3;
@@ -272,7 +272,7 @@ label:
             cout << "Enter the year of which you want lowest package: ";
             cin >> yr;
             cout<<endl;
-            cout << "Lowest package of " << yr << ": " << lowest_salary_year(&database, yr) << endl;
+            cout << "Lowest package of " << yr << ": Rs. " << lowest_salary_year(&database, yr) << endl;
             cout<<endl;
             cout<<CYAN<<"------------------------------------------------------------------------------------------------------"<<RESET<<endl;
             goto label3;
@@ -296,7 +296,7 @@ label:
             cin >> branchCode;
             cout<<endl;
 
-            cout << "Highest package of " << yr << " of the required branch: " << highest_salary_year_branch(&database, yr, branchCode) << endl;
+            cout << "Highest package of " << yr << " of the required branch: Rs. " << highest_salary_year_branch(&database, yr, branchCode) << endl;
             cout<<endl;
             cout<<CYAN<<"------------------------------------------------------------------------------------------------------"<<RESET<<endl;
             goto label3;
@@ -319,7 +319,7 @@ label:
                  << "Enter Branchcode: ";
             cin >> branchCode;
 
-            cout << "Average package of " << yr << " of the required branch: " << average_salary_year_branch(&database, yr, branchCode) << endl;
+            cout << "Average package of " << yr << " of the required branch: Rs. " << average_salary_year_branch(&database, yr, branchCode) << endl;
             cout<<endl;
             cout<<CYAN<<"------------------------------------------------------------------------------------------------------"<<RESET<<endl;
             goto label3;

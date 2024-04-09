@@ -716,7 +716,7 @@ void Student_Complete_Information(int ID, DataBase D)
                     cout << "The email ID of student is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->email << endl;
                     cout << "The Whatsapp no. of stdudent is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->Whatsapp_no << endl;
                     cout << "The skype ID of student is: " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->skypeID << endl;
-                    cout << "The program of student enrolled is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->program << endl<<endl;
+                    cout << "The program of student enrolled is : " << D.hashRtYear(year)->company[i].rptr[j]->accesshashStdId(ID)->program <<endl;
                 }
             }else{
                 continue;
@@ -725,7 +725,7 @@ void Student_Complete_Information(int ID, DataBase D)
         if (counter > 0)
         {
             cout << "The student appeared for Company " << D.hashRtYear(year)->company[i].cName << endl;
-            cout << "He cleared till Round " << counter << endl;
+            cout << "He/she cleared till Round " << counter << endl<<endl<<endl;
         }
     }
 }
