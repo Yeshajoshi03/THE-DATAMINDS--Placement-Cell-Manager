@@ -908,8 +908,6 @@ void student_year_company_passpercentage(DataBase d,int year, string company)
 {
     cout << "Press 1 to get total percentage of students placed" << endl;
     cout << "Press 2 to get pass percetage of students from round to another round" << endl;
-    cout << "Press 1 to get total percentage of students placed" << endl;
-    cout << "Press 2 to get pass percetage of students from round to another round" << endl;
     int choice;
     cin >> choice;
     float percentage;
