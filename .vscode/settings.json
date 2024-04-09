@@ -1,11 +1,5 @@
 {
 <<<<<<< HEAD
-  "files.associations": {
-    "iostream": "cpp",
-    "thread": "cpp"
-  },
-  "C_Cpp_Runner.msvcBatchPath": ""
-=======
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
   "C_Cpp_Runner.debuggerPath": "gdb",
@@ -63,5 +57,11 @@
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false
->>>>>>> 457bd54bc68b6088d76665eaf1044431d2f03ec3
+=======
+  "files.associations": {
+    "iostream": "cpp",
+    "thread": "cpp"
+  },
+  "C_Cpp_Runner.msvcBatchPath": ""
+>>>>>>> function
 }

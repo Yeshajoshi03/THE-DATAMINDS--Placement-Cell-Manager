@@ -8,8 +8,13 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
+<<<<<<< HEAD
+      "cwd": "c:/Users/ysjos/Desktop/C++ Course/Project/THE-DATAMINDS--Placement-Cell-Manager",
+      "program": "c:/Users/ysjos/Desktop/C++ Course/Project/THE-DATAMINDS--Placement-Cell-Manager/build/Debug/outDebug",
+=======
       "cwd": "c:/Users/ysjos/Desktop/C++ Course/P2/THE-DATAMINDS--Placement-Cell-Manager",
       "program": "c:/Users/ysjos/Desktop/C++ Course/P2/THE-DATAMINDS--Placement-Cell-Manager/build/Debug/outDebug",
+>>>>>>> function
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
